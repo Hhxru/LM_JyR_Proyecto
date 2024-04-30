@@ -8,14 +8,7 @@
 <body>
 <table  border="5">
     <tr id="tabla_cab">
-        <td>DNI</td>
-        <td>Apellido_1</td>
-        <td>Apellido_2</td>
-        <td>Nombre</td>
-        <td>Direccion</td>
-        <td>Localidad</td>
-        <td>Provincia</td>
-        <td>Fecha de nacimiento</td>
+        
     </tr>
 
     <?php

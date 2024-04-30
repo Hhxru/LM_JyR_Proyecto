@@ -63,7 +63,8 @@
               $row = $stmt->execute($datos);
 
               if($row){
-                echo $e->getMessage();
+                echo "Usuario registrado con éxito";
+                echo "<a href="."listarAlumnos.php"."><strong>Ver listado de Alumnos</strong></a>";
               }
             }
 
