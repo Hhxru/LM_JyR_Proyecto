@@ -16,7 +16,7 @@
     $ant_pag = $_POST['ant_pag'] ?? null;
 
 
-    $host='rpsserv.com';
+    $host='localhost';
     $dbname='universidad';
     $user='root';
     $pass='';
