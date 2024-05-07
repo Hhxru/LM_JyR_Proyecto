@@ -12,8 +12,8 @@
     </tr>
 
     <?php
-        $host='rpsserv.com';
-        $dbname='universidad';
+        $host='localhost';
+        $dbname='fct';
         $user='root';
         $pass='';
         
@@ -36,7 +36,9 @@
     
 
         while($row = $stmt->fetch()){
-                echo "<tr>"."<td>".$row['DNI']."</td>"."<td>".$row['APELLIDO_1']."</td>"."<td>".$row['APELLIDO_2']."</td>"."</tr>";
+                echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."</tr>";
+
+                echo $row['email'].$row['nia'];
             }
         }
 

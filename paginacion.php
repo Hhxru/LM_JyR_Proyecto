@@ -82,17 +82,20 @@
         //mostrar pagina con: pagina-1 * resultados por pagina(=10)
         $mostrar_pag = ($num_pag - 1) * $resultados_pag;
         
-
         //query para mostrar los datos
-        $sql = "SELECT * FROM alumno Where true limit 10 offset $mostrar_pag";
-        
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($datos);
+        $sql = "SELECT * FROM alumno Where true";
 
         if(!empty($buscar)){
             $sql .= " and nombre = :buscar";
             $datos [":buscar"]=$buscar;
+        }else{
+            $sql .= " limit 10 offset $mostrar_pag";
         }
+        
+
+        //ejecutar consulta
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($datos);
 
         
 
