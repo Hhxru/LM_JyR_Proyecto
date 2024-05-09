@@ -20,11 +20,17 @@
     </header>
     <section id="cuerpoPrincipal">
         <article id="usuario">
-            <h2>Informacion de usuario</h2>
-            <p>Nombre: X</p>
-            <p>Email: x@y.com</p>
-            <p>Iniciado como: Tutor
-            </p>
+            <article>
+                <h2>Informacion de usuario</h2>
+                <p>Nombre: X</p>
+                <p>Email: x@y.com</p>
+                <p>Iniciado como: Tutor
+                </p>
+            </article>
+
+            <article id="altaUsuarios">
+                <h2>Alta usuarios</h2>
+            </article>
         </article>
             
         <article id="tabla">
