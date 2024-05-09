@@ -39,7 +39,7 @@
         $apellido=$_POST['ape'] ?? null;
 
         if($_POST){
-            $host='rpsserv.com';
+            $host='localhost';
             $dbname='universidad';
             $user='root';
             $pass='';

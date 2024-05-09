@@ -9,8 +9,8 @@
         $estado=$_POST['estado'] ?? null;
 
         if($_POST){
-            $host='rpsserv.com';
-            $dbname='universidad';
+            $host='localhost';
+            $dbname='fct';
             $user='root';
             $pass='';
             
