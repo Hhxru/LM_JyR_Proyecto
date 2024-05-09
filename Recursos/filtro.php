@@ -11,7 +11,7 @@
 
     $buscar=$_POST['buscar'] ?? null;
 
-    $host='rpsserv.com';
+    $host='localhost';
     $dbname='universidad';
     $user='root';
     $pass='';

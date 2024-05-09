@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-
-    <header></header>
-
+    <header>
+        <h1>MediaGestCT</h1>
+    </header>
     <section class="login">
-        <form class="loginFormulario" action="login.php" method="post">
+        <form class="loginFormulario">
             <h2>
-                <img src="img/OIG3-removebg-preview.png" alt="">
+                <img src="img/OIG2-removebg-preview.png" alt="">
             </h2>
             <article class="formularios">
                 <label for="email">
-                    <input type="text" id="email" placeholder="Email:" name="email" required>
+                    <input type="text" id="email" placeholder="Correo electrónico:" name="email" required>
                 </label>
             </article>
             <article class="formularios">
@@ -29,7 +29,7 @@
         </form>
     </section>
 
-<?php
+    <?php
 
 $host='localhost';
 $dbname='fct';
@@ -66,6 +66,5 @@ try {
     echo $e->getMessage();
 }
 ?>
-
 </body>
 </html>
