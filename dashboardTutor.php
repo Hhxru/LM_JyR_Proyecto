@@ -36,6 +36,7 @@
             $sig_pag = $_POST['sig_pag'] ?? null;
             $ant_pag = $_POST['ant_pag'] ?? null;
             $ir = $_POST['ir'] ?? null;
+            $id = "";
 
 
             $host='localhost';
@@ -66,6 +67,7 @@
                 <td class="tdmain">Nombre</td>
                 <td class="tdmain">CV_FILE</td>
                 <td class="tdmain">Contraseña</td>
+                <td class="tdmain">--</td>
                 </tr>
 
             <?php
@@ -123,21 +125,20 @@
                     $sql .= " limit 10 offset $mostrar_pag";
                 }
                 
-
+            
                 //ejecutar consulta
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute($datos);
 
-                
-
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
                         while($row=$stmt->fetch()){
-                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."</tr>";
+                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='modificarAlu.php?id=".$row['email']."'>Editar</a>"."</td>"."</tr>";
                         }
                         if($row['email']=null){
                             echo"No hay datos relacionados.";
                         }
+                        echo $row['email'];
                         
                 //}
 
@@ -150,7 +151,7 @@
                 <input type="submit" name="ant_pag" value="<">
                 <input type="number" name="pagina" <?php echo "value=".$page;?>>
                 <input type="submit" name="ir" value="IR">
-                <input type="submit" name="sig_pag" value=">">   
+                <input type="submit" name="sig_pag" value=">">
             </form>
         </article>
     </section>
