@@ -9,8 +9,8 @@
 <body>
     <header>
         <ul>
-            <li><a href="">Inicio  </a></li>
             <li><a href="">Alumnos</a></li>
+            <li><a href="dashboardAlu.php">Modificar</a></li>
             <li><a href="">Usuario </a></li>
         </ul>
         <div id="logo">
