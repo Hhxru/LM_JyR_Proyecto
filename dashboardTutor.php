@@ -10,7 +10,6 @@
     <header>
         <ul>
             <li><a href="">Alumnos</a></li>
-            <li><a href="dashboardAlu.php">Modificar</a></li>
             <li><a href="">Usuario </a></li>
         </ul>
         <div id="logo">
@@ -194,7 +193,7 @@
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
                         while($row=$stmt->fetch()){
-                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='modificarAlu.php?id=".$row['email']."'>Editar</a>"."</td>"."</tr>";
+                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='dashboardAlu.php?id=".$row['email']."'>Editar</a>"."</td>"."</tr>";
                         }
                         if($row['email']=null){
                             echo"No hay datos relacionados.";
