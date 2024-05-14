@@ -15,28 +15,20 @@
         </ul>
         <div id="logo">
             <img src="img/OIG2-removebg-preview.png" alt="">
-            
         </div>
     </header>
-    <section id="cuerpoPrincipal">
-        <article id="usuario">
-            <h2>Informacion de usuario</h2>
-            <p>Nombre: X</p>
-            <p>Email: x@y.com</p>
-            <p>Iniciado como: Tutor
-            </p>
-        </article>
-            
-        <article id="tabla">
+
             <?php
 
             $buscar=$_POST['buscar'] ?? null;
-            $resultados_pag = 10;
+            $resultadosPag = 10;
             $page = $_POST['pagina'] ?? 1;
             $sig_pag = $_POST['sig_pag'] ?? null;
             $ant_pag = $_POST['ant_pag'] ?? null;
             $ir = $_POST['ir'] ?? null;
-            $id = "";
+            //$id="";
+            $id = $_GET['id'] ?? null;
+            $userLog = $_GET['user'] ?? null;
 
 
             $host='localhost';
@@ -51,7 +43,18 @@
                 
                 # Para que genere excepciones a la hora de reportar errores.
                 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );      
-            ?>  
+            ?> 
+            
+            <section id="cuerpoPrincipal">
+        <article id="usuario">
+            <h2>Informacion de usuario</h2>
+            <p>Nombre: <?php  echo"$userLog"?></p>
+            <p>Email: x@y.com</p>
+            <p>Iniciado como: Tutor
+            </p>
+        </article>
+            
+        <article id="tabla">
 
             <h1>Busqueda de alumnos</h1>
             <form action="dashboardTutor.php" method="post">
@@ -72,32 +75,30 @@
 
             <?php
                 $datos = [];
-
                 //query para recoger el numero de datos
-                $filas_totales = "SELECT count(*) FROM alumno";
-                $stmt = $pdo->prepare($filas_totales);
+                $totalFilas = "SELECT count(*) as filas_totales FROM alumno";
+                $stmt = $pdo->prepare($totalFilas);
                 $stmt->execute($datos);
-                $datos_totales=$stmt->fetch();
+                $totalDatos=$stmt->fetch();
 
-                //parsear el array del resultado de la query a entero
-                $cadena = implode("", $datos_totales);
-                $total_filas = intval($cadena);
+
+                //capturar el numero de filas por el alias de la query
+                $totalFilas = $totalDatos['filas_totales'];
                 
+                //paginas totales a paginar y edondear alto el resultado
+                $totalPag = ceil($totalFilas / $resultadosPag);                
 
-                //paginas totales a paginar
-                $paginas_totales = ceil($total_filas / $resultados_pag);
-                $num_totalPag = (int)$paginas_totales;
 
                 //si pulsa el boton ">" pagina +1
                 if(isset($_POST['sig_pag'])){
                     $page ++;
-                }if($page>$paginas_totales){
-                    $page=$paginas_totales;
+                }if($page>$totalPag){
+                    $page=$totalPag;
                     echo "No existen más datos sobre la busqueda relacionada";
                 }
 
-                if(isset($ir) and $page>$num_totalPag){
-                    $page==$num_totalPag;
+                if(isset($ir) and $page>$totalPag){
+                    $page=$totalPag;
                 }if(isset($ir) and $page<1){
                     $page=1;
                 }
@@ -113,7 +114,7 @@
                 $num_pag=intval($page);
 
                 //mostrar pagina con: pagina-1 * resultados por pagina(=10)
-                $mostrar_pag = ($num_pag - 1) * $resultados_pag;
+                $mostrar_pag = ($num_pag - 1) * $resultadosPag;
                 
                 //query para mostrar los datos
                 $sql = "SELECT * FROM alumno Where true";
@@ -133,12 +134,24 @@
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
                         while($row=$stmt->fetch()){
-                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='modificarAlu.php?id=".$row['email']."'>Editar</a>"."</td>"."</tr>";
+                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='modificarAlu.php?id=".$row['email']."'>Editar</a>"."<a href='dashboardTutor.php?id=".$row['email']."'>Eliminar</a>".
+                            "</td>"."</tr>";
                         }
                         if($row['email']=null){
                             echo"No hay datos relacionados.";
                         }
-                        echo $row['email'];
+
+                        if(isset($_GET['id'])){
+                            $sql = "DELETE FROM alumno WHERE email = \"$id\"";
+                            print($id);
+                            print($sql);
+                            //$datos [":eliminar"]=$del;
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute($datos);
+                            echo"Usuario eliminado con éxito";
+                            echo '<script>window.location.href = "dashboardTutor.php";</script>';
+                        }
+
                         
                 //}
 
@@ -146,6 +159,7 @@
                 echo "Error de conexion con la BD";
             }
             ?>
+        
             </table>
             <form action="dashboardTutor.php" method="post">
                 <input type="submit" name="ant_pag" value="<">

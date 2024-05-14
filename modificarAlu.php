@@ -15,6 +15,8 @@
         $tel = $_POST['telefono'] ?? null;
         $nombre = $_POST['nombre'] ?? null;
         $password = $_POST['contrasena'] ?? null;
+        $modificar = $_POST['modif'] ?? null;
+
 
         $host='localhost';
         $dbname='fct';
@@ -46,7 +48,7 @@
         <input type="text" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>
         <input type="text" name="nombre" placeholder="Nombre" value="<?php print($usuario['nombre'])?>" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
         <input type="password" name="contrasena" placeholder="Contraseña" value="<?php print($usuario['passwrd'])?>" minlength="4" required>
-        <input type="submit" value="Modificar">
+        <input type="submit" name="modif" value="Modificar">
     </form>
 
     <a href="dashboardTutor.php">Volver</a>
@@ -66,14 +68,16 @@
 
         $sql = "UPDATE alumno SET nia = \"$nia\", telefono = \"$tel\", nombre = \"$nombre\", passwrd = \"$password\" WHERE email = \"$email\"";
         $stmt = $pdo->prepare($sql);
-        $usuario = $stmt->execute($datos);
+        $stmt->execute($datos);
 
-        if($usuario){
+        if(isset($_POST['modif'])){
             echo "Usuario modificado con éxito";
-        }else{
+            echo "Datos actualizados -> Usuario: ".$email." Nia: ".$nia." Nombre: ".$nombre." Telefono: ".$tel." Contraseña: ".$password;
+        }/*todo{
             echo "Upps!!! Algo salió mal";
             echo "Revise los campos y vuelva a intentarlo";
-        }
+        }*/
+        
 
 
         }catch(PDOException $e){
