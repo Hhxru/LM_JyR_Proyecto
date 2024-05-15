@@ -8,6 +8,7 @@
 </head>
 <body>
     <header>
+        <h1>MediaGestCT</h1>
         <ul>
             <li><a href="dashboardTutor.php">Alumnos</a></li>
             <li><a href="">Usuario </a></li>
