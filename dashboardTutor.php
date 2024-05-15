@@ -16,81 +16,6 @@
             <img src="img/OIG2-removebg-preview.png" alt="">
         </div>
     </header>
-<<<<<<< HEAD
-    <section id="cuerpoPrincipal">
-        <article id="usuario">
-            <article>
-                <h2>Informacion de usuario</h2>
-                <p>Nombre: X</p>
-                <p>Email: x@y.com</p>
-                <p>Iniciado como: Tutor
-                </p>
-            </article>
-
-            <article id="altaUsuarios">
-                <form id="formularioAlta" action="dashboardTutor.php" method="post">
-                    <h2>Alta usuarios</h2>
-                    <input type="email" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
-                    <input type="text" name="nia" placeholder="NIA" pattern="[0-9]*" minlength="8" maxlength="8" required> 
-                    <input type="text" name="telefono" placeholder="Nº Telefono" pattern="[0-9]*" minlength="9" maxlength="9" required>
-                    <input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
-                    <input type="password" name="contrasena" placeholder="Contraseña" minlength="4" required>
-                    <input type="submit" value="Registrar alumno">
-                    <input type="reset" value="Borrar datos">
-                </form>
-
-                <?php
-                    $email=$_POST['email'] ?? null;
-                    $nia=$_POST['nia'] ?? null;
-                    $tel=$_POST['telefono'] ?? null;
-                    $nombre=$_POST['nombre'] ?? null;
-                    $password=$_POST['contrasena'] ?? null;
-
-                    if($_POST){
-                        $host='localhost';
-                        $dbname='fct';
-                        $user='root';
-                        $pass='';
-
-                        try {
-                            # MySQL con PDO_MYSQL
-                            # Para que la conexion al mysql utilice las collation UTF-8 añadir charset=utf8 al string de la conexion.
-                            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
-                        
-                            # Para que genere excepciones a la hora de reportar errores.
-                            $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-                            $sql = "insert into alumno (email, nia, telefono, nombre, passwrd) values (:email, :nia, :telefono, :nombre, :password)";
-
-
-                            $datos=[
-                                ":email"=>$email,
-                                ":nia"=>$nia,
-                                ":telefono"=>$tel,
-                                ":nombre"=>$nombre,
-                                ":password"=>$password
-                            ];
-
-                            $stmt = $pdo->prepare($sql);
-                            $row = $stmt->execute($datos);
-
-                            if($row){
-                                echo"Usuario registrado con éxito";
-                            }else{
-                                echo"Error en el registro. No se han podido registrar los datos.";
-                            }
-                        }catch(PDOException $e){
-                            echo $e->getMessage();
-                        }
-                    }
-                ?>
-            </article>
-        </article>
-            
-        <article id="tabla">
-=======
-
->>>>>>> a3258d86241550357d56a75d06901c4e7af2dcc1
             <?php
 
             $buscar=$_POST['buscar'] ?? null;
@@ -184,15 +109,9 @@
         <article id="tabla">
             <h1>Busqueda de alumnos</h1>
             <form action="dashboardTutor.php" method="post">
-<<<<<<< HEAD
-                    <input id="buscar" type="text" name="buscar" placeholder='Busqueda por nombre'>
-                    <input id="buscar" type="submit">
-            <form>
-=======
                     <input type="text" id="buscar" name="buscar" placeholder='Busqueda por nombre'>
                     <input id="buscar" type="submit">
             </form>
->>>>>>> a3258d86241550357d56a75d06901c4e7af2dcc1
             <p></p>
             <table border="2">
                 <tr>
@@ -265,16 +184,6 @@
 
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
-<<<<<<< HEAD
-                        while($row=$stmt->fetch()){
-                            echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='dashboardAlu.php?id=".$row['email']."'>Editar</a>"."</td>"."</tr>";
-                        }
-                        if($row['email']=null){
-                            echo"No hay datos relacionados.";
-                        }
-                        echo $row['email'];
-                        
-=======
                     while($row=$stmt->fetch()){
                         echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='modificarAlu.php?id=".$row['email']."'>Editar</a>"."<a href='dashboardTutor.php?id=".$row['email']."'>Eliminar</a>".
                         "</td>"."</tr>";
@@ -294,7 +203,6 @@
                         echo '<script>window.location.href = "dashboardTutor.php";</script>';
                     }
                     
->>>>>>> a3258d86241550357d56a75d06901c4e7af2dcc1
                 //}
 
             }catch(PDOException $e){
