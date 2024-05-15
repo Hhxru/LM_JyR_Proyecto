@@ -15,7 +15,7 @@
         <div id="logo">
             <img src="img/OIG2-removebg-preview.png" alt="">
         </div>
-    </header>
+    </header> 
             <?php
 
             $buscar=$_POST['buscar'] ?? null;
@@ -61,13 +61,13 @@
             <article id="altaUsuarios">
                     <form id="formularioAlta" action="dashboardTutor.php" method="post">
                         <h2>Alta usuarios</h2>
-                        <input type="email" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
-                        <input type="text" name="nia" placeholder="NIA" pattern="[0-9]*" minlength="8" maxlength="8" required> 
-                        <input type="text" name="telefono" placeholder="Nº Telefono" pattern="[0-9]*" minlength="9" maxlength="9" required>
-                        <input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
-                        <input type="password" name="contrasena" placeholder="Contraseña" minlength="4" required>
-                        <input type="submit" name="alta" value="Registrar alumno">
-                        <input type="reset" value="Borrar datos">
+                        <input type="email" class="textbox" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
+                        <input type="text" class="textbox" name="nia" placeholder="NIA" pattern="[0-9]*" minlength="8" maxlength="8" required> 
+                        <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" pattern="[0-9]*" minlength="9" maxlength="9" required>
+                        <input type="text" class="textbox" name="nombre" placeholder="Nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
+                        <input type="password" class="textbox" name="contrasena" placeholder="Contraseña" minlength="4" required>
+                        <input type="submit" class="button" name="alta" value="Registrar alumno">
+                        <input type="reset" class="button" value="Borrar datos">
                     </form>
 
                 <?php
@@ -109,8 +109,8 @@
         <article id="tabla">
             <h1>Busqueda de alumnos</h1>
             <form action="dashboardTutor.php" method="post">
-                    <input type="text" id="buscar" name="buscar" placeholder='Busqueda por nombre'>
-                    <input id="buscar" type="submit">
+                    <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
+                    <input class="button" type="submit">
             </form>
             <p></p>
             <table border="2">
@@ -212,10 +212,10 @@
         
             </table>
             <form id="formAlumnos" action="dashboardTutor.php" method="post">
-                <input type="submit" name="ant_pag" value="<">
-                <input type="number" name="pagina" <?php echo "value=".$page;?>>
-                <input type="submit" name="ir" value="IR">
-                <input type="submit" name="sig_pag" value=">">
+                <input type="submit" class="button" name="ant_pag" value="<">
+                <input type="number"  name="pagina" <?php echo "value=".$page;?>>
+                <input type="submit" class="button" name="ir" value="IR">
+                <input type="submit" class="button" name="sig_pag" value=">">
             </form>
         </article>
     </section>
