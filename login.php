@@ -11,7 +11,7 @@
         <h1>MediaGestCT</h1>
     </header>
     <section class="login">
-        <form class="loginFormulario">
+        <form class="loginFormulario" method="post">
             <h2>
                 <img src="img/OIG2-removebg-preview.png" alt="">
             </h2>
@@ -25,46 +25,51 @@
                     <input type="password" id="password" placeholder="Contraseña:" name="password" required>
                 </label>
             </article>
-            <button type="submit">Iniciar sesión</button>
+            <button name="sesion" type="submit">Iniciar sesión</button>
         </form>
     </section>
 
     <?php
 
-$host='localhost';
-$dbname='fct';
-$user='root';
-$pass='';
+        $host='localhost';
+        $dbname='fct';
+        $user='root';
+        $pass='';
 
-$email = $_POST['email'] ?? null;
-$password = $_POST['password'] ?? null;
+        $email = $_POST['email'] ?? null;
+        $password = $_POST['password'] ?? null;
+        $sesion = $_POST['sesion'] ?? null;
 
-try {
-    # MySQL con PDO_MYSQL
-    # Para que la conexion al mysql utilice las collation UTF-8 añadir charset=utf8 al string de la conexion.
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+        try {
+            # MySQL con PDO_MYSQL
+            # Para que la conexion al mysql utilice las collation UTF-8 añadir charset=utf8 al string de la conexion.
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+            
+            # Para que genere excepciones a la hora de reportar errores.
+            $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+            $sql = "SELECT email, passwrd FROM alumno where email=\"$email\" and passwrd=\"$password\"";
+            $datos=[];
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($datos);
+
+            if(isset($_POST['sesion'])){
+                echo"Usuario registrado correctamente";
+                $sql="SELECT nombre as user FROM alumno WHERE email=\"$email\"";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($datos);
+                $nom = $stmt->fetch();
+                
+                //enviar nombre de usuario correspondiente al correo
+                echo"<script>window.location.href = 'dashboardTutor.php?user=".$nom['user']."';</script>";
     
-    # Para que genere excepciones a la hora de reportar errores.
-    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-    $sql = "SELECT email, passwrd FROM alumno where email=\"$email\" and passwrd=\"$password\"";
-    $datos=[];
-    echo $sql;
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($datos);
-
-    if($result = $stmt->fetch()){
-        echo"Usuario registrado correctamente";
-        echo $result['email'].$result['passwrd'];
-    }else{
-        echo "Usuario no registrado";
-    }
-    
-
-}catch(PDOException $e){
-    echo $e->getMessage();
-}
-?>
+            }else{
+                echo "Usuario no registrado";
+            }
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    ?>
 </body>
 </html>
