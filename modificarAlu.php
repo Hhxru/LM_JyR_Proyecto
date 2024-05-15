@@ -56,7 +56,7 @@
             <input type="submit" class="button" value="Modificar">
             </form>
 
-           <a href="dashboardTutor.php"> <input type="submit" class="button" placeholder="Volver"></a>
+           <a href="dashboardTutor.php"> <input type="submit" class="button" value="Volver"></a>
 
 
             <?php

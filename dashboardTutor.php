@@ -110,7 +110,7 @@
             <h1>Busqueda de alumnos</h1>
             <form action="dashboardTutor.php" method="post">
                     <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
-                    <input class="button" type="submit">
+                    <input class="button" type="submit" value="Buscar">
             </form>
             <p></p>
             <table border="2">
@@ -185,7 +185,9 @@
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
                     while($row=$stmt->fetch()){
-                        echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<a href='modificarAlu.php?id=".$row['email']."'>Editar</a>"."<a href='dashboardTutor.php?id=".$row['email']."'>Eliminar</a>".
+                        echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<button class=\"button\" onclick=\"window.location='modificarAlu.php?id=".$row['email']."'\">Editar</button>"."<button class=\"button\" onclick=\"window.location='dashboardTutor.php?id=".$row['email']."'\">Eliminar</button>";
+
+
                         "</td>"."</tr>";
                     }
                     if($row['email']=null){
