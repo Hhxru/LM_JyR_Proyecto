@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Alumno</title>
-    <link rel="stylesheet" href="css/dashboardAlu.css">
+    <link rel="stylesheet" href="css/modificarAlu.css">
 </head>
 <body>
     <header>
@@ -48,15 +48,15 @@
 
 
             <form action="dashboardAlu.php" method="post">
-            <input type="email" name="email" value="<?php print($usuario['email'])?>" readonly>
-            <input type="text" name="nia" placeholder="NIA" value="<?php print($usuario['nia'])?>" pattern="[0-9]*" minlength="8" maxlength="8" required>
-            <input type="text" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>
-            <input type="text" name="nombre" placeholder="Nombre" value="<?php print($usuario['nombre'])?>" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
-            <input type="password" name="contrasena" placeholder="Contraseña" value="<?php print($usuario['passwrd'])?>" minlength="4" required>
-            <input type="submit" value="Modificar">
+            <input type="email" class="textbox" name="email" value="<?php print($usuario['email'])?>" readonly>
+            <input type="text" class="textbox" name="nia" placeholder="NIA" value="<?php print($usuario['nia'])?>" pattern="[0-9]*" minlength="8" maxlength="8" required>
+            <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>
+            <input type="text" class="textbox" name="nombre" placeholder="Nombre" value="<?php print($usuario['nombre'])?>" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
+            <input type="password" class="textbox" name="contrasena" placeholder="Contraseña" value="<?php print($usuario['passwrd'])?>" minlength="4" required>
+            <input type="submit" class="button" value="Modificar">
             </form>
 
-            <a href="dashboardTutor.php">Volver</a>
+           <a href="dashboardTutor.php"> <input type="submit" class="button" placeholder="Volver"></a>
 
 
             <?php
