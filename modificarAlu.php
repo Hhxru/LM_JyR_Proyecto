@@ -8,12 +8,17 @@
 </head>
 <body>
     <header>
+        <ul>
+            <li><a href="dashboardTutor.php">Alumnos</a></li>
+            <li><a href="">Usuario </a></li>
+        </ul>
         <div id="logo">
             <img src="img/OIG2-removebg-preview.png" alt="">
             
         </div>
     </header>
     <section id="cuerpoPrincipal">
+        <article>
         <?php
 
             $id = $_GET['id'] ?? null;
@@ -46,6 +51,7 @@
 
             ?>  
 
+            <h2>Modificar Usuario</h2>
 
             <form action="dashboardAlu.php" method="post">
             <input type="email" class="textbox" name="email" value="<?php print($usuario['email'])?>" readonly>
@@ -87,6 +93,7 @@
                 echo "Error de conexion con la BD";
             }
         ?>
+        </article>
     </section>
     
 </body>

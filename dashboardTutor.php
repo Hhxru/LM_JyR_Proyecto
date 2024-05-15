@@ -9,7 +9,7 @@
 <body>
     <header>
         <ul>
-            <li><a href="">Alumnos</a></li>
+            <li><a href="dashboardTutor.php">Alumnos</a></li>
             <li><a href="">Usuario </a></li>
         </ul>
         <div id="logo">

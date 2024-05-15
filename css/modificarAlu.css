@@ -4,6 +4,7 @@ body {
     background-color: #ffffff;
     margin: 0;
     padding: 0;
+
 }
 
 header{
@@ -24,15 +25,46 @@ header{
             width: 160px;
             margin-top: -15px;
             margin-right: 90px;
-        }            
+        }    
+
+        header ul {
+            width: 100%;
+            list-style-type: none;
+            flex-direction:row;
+            align-items: center;
+            display: flex;
+            margin-left: 50%;
+            gap: 15%;
+        }
+            header ul li a{
+                color: white;
+                text-decoration: none;
+                font-size: 140%;
+                background-color: #741111;
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border-radius: 30px;
+                box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            }
 
 #cuerpoPrincipal {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    height: 500px;
-    margin-top: 60px;
+    justify-content: center;
+    width: 100%;
 }
+
+    #cuerpoPrincipal article{
+        padding: 60px;
+        margin-top: 5%;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        width: 20%;
+        text-align: center;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    }
 
 input{
     padding: 5px;
@@ -46,6 +78,7 @@ input{
 
 .button{
     background-color: rgb(155, 14, 14);
+    width: 60%;
     color: white;
     padding: 10px 20px;
     border: #ffffff;
@@ -58,6 +91,7 @@ input{
 .textbox {
     padding: 10px;
     margin: 5px;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 15px;
     box-sizing: border-box;
