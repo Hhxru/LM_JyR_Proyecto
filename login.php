@@ -25,7 +25,7 @@
                     <input type="password" id="password" placeholder="Contraseña:" name="password" required>
                 </label>
             </article>
-            <button type="submit">Iniciar sesión</button>
+            <button name="sesion" type="submit">Iniciar sesión</button>
         </form>
     </section>
 
@@ -38,6 +38,7 @@
 
         $email = $_POST['email'] ?? null;
         $password = $_POST['password'] ?? null;
+        $sesion = $_POST['sesion'] ?? null;
 
         try {
             # MySQL con PDO_MYSQL
@@ -53,7 +54,7 @@
             $stmt = $pdo->prepare($sql);
             $stmt->execute($datos);
 
-            if($result = $stmt->fetch()){
+            if(isset($_POST['sesion'])){
                 echo"Usuario registrado correctamente";
                 $sql="SELECT nombre as user FROM alumno WHERE email=\"$email\"";
                 $stmt = $pdo->prepare($sql);
