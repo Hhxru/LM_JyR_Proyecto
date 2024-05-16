@@ -48,22 +48,34 @@
             # Para que genere excepciones a la hora de reportar errores.
             $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-            $sql = "SELECT email, passwrd FROM alumno where email=\"$email\" and passwrd=\"$password\"";
+            $sql = "SELECT email, passwrd, nombre as user FROM tutor where email=\"$email\" and passwrd=\"$password\"";
             $datos=[];
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute($datos);
+            $result = $stmt->fetch();
+            
+            if(!empty($result)){
+                //si encuentra datos relacionados inicia sesión
+                echo"Inicio de sesión como tutor";
 
-            if(isset($_POST['sesion'])){
-                echo"Usuario registrado correctamente";
-                $sql="SELECT nombre as user FROM alumno WHERE email=\"$email\"";
+                //enviar nombre de usuario correspondiente al correo
+                echo"<script>window.location.href = 'dashboardTutor.php?user=".$result['user']."';</script>";
+
+            }if(empty($result)){
+                $sql = "SELECT email, passwrd, nombre as user FROM alumno WHERE email=\"$email\" and passwrd=\"$password\"";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute($datos);
-                $nom = $stmt->fetch();
-                
+                $result = $stmt->fetch();
+
+                if(!empty($result)){
+                //si encuentra datos relacionados inicia sesión
+                echo"Inicio de sesión como alumno";
+
                 //enviar nombre de usuario correspondiente al correo
-                echo"<script>window.location.href = 'dashboardTutor.php?user=".$nom['user']."';</script>";
-    
+                echo"<script>window.location.href = 'dashboardAlumno.php?user=".$nom['user']."';</script>";
+                }
+
             }else{
                 echo "Usuario no registrado";
             }
