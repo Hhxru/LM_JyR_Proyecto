@@ -1,3 +1,4 @@
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     text-decoration: none;
@@ -105,26 +106,38 @@ header{
     margin-left: 10px;
     border-radius: 18px;
     padding-bottom: 4%;
-    padding-top: 4%;
+    padding-top: 2%;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
 }
 
 #buscar{
     width: 20%;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.tdmain {
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
     background-color: #9e1a1a;
-    color: #fff;
+    color: white;
 }
-td {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
+
+
 
 #formAlumnos{
     display: flex;
@@ -162,4 +175,8 @@ input{
     border-radius: 15px;
     box-sizing: border-box;
     font-size: 16px;
+}
+
+.text{
+    font-size: 25px;
 }

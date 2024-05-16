@@ -53,7 +53,7 @@
             <section id="cuerpoPrincipal">
         <article id="usuario">
             <article>
-                <h2>Informacion de usuario</h2>
+                <h2 class="text">Informacion de usuario</h2>
                 <p>Nombre: <?php  echo"$userLog"?></p>
                 <p>Email: x@y.com</p>
                 <p>Iniciado como: Tutor</p>
@@ -61,7 +61,7 @@
 
             <article id="altaUsuarios">
                     <form id="formularioAlta" action="dashboardTutor.php" method="post">
-                        <h2>Alta usuarios</h2>
+                        <h2 class="text">Alta usuarios</h2>
                         <input type="email" class="textbox" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
                         <input type="text" class="textbox" name="nia" placeholder="NIA" pattern="[0-9]*" minlength="8" maxlength="8" required> 
                         <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" pattern="[0-9]*" minlength="9" maxlength="9" required>
@@ -108,21 +108,21 @@
         </article>       
 
         <article id="tabla">
-            <h1>Busqueda de alumnos</h1>
+            <h1 class="text">Busqueda de alumnos</h1>
             <form action="dashboardTutor.php" method="post">
                     <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
                     <input class="button" type="submit" value="Buscar">
             </form>
             <p></p>
-            <table border="2">
+            <table>
                 <tr>
-                <td class="tdmain">Email</td>
-                <td class="tdmain">NIA</td>
-                <td class="tdmain">Telefono</td>
-                <td class="tdmain">Nombre</td>
-                <td class="tdmain">CV_FILE</td>
-                <td class="tdmain">Contraseña</td>
-                <td class="tdmain">--</td>
+                <th class="tdmain">Email</th>
+                <th class="tdmain">NIA</th>
+                <th class="tdmain">Telefono</th>
+                <th class="tdmain">Nombre</th>
+                <th class="tdmain">CV_FILE</th>
+                <th class="tdmain">Contraseña</th>
+                <th class="tdmain">--</th>
                 </tr>
 
         <?php
