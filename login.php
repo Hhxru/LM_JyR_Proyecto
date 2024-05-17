@@ -55,30 +55,34 @@
             $stmt->execute($datos);
             $result = $stmt->fetch();
             
-            if(!empty($result)){
+            if(isset($_POST['sesion'])){
+                if(!empty($result)){
                 //si encuentra datos relacionados inicia sesión
-                echo"Inicio de sesión como tutor";
+                //echo"Inicio de sesión como tutor";
 
                 //enviar nombre de usuario correspondiente al correo
                 echo"<script>window.location.href = 'dashboardTutor.php?user=".$result['user']."';</script>";
-
-            }if(empty($result)){
+                
+                }if(empty($result)){
                 $sql = "SELECT email, passwrd, nombre as user FROM alumno WHERE email='$email' and passwrd='$password'";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute($datos);
                 $result = $stmt->fetch();
 
-                if(!empty($result)){
+                }if(!empty($result)){
                 //si encuentra datos relacionados inicia sesión
-                echo"Inicio de sesión como alumno";
-
+                //echo"Inicio de sesión como alumno";
+                
                 //enviar nombre de usuario correspondiente al correo
-                echo"<script>window.location.href = 'dashboardAlumno.php?user=".$nom['user']."';</script>";
-                }
+                echo"<script>window.location.href = 'dashboardAlumno.php?user=".$result['user']."';</script>";
 
-            }else{
+                }else{
                 echo "Usuario no registrado";
+                }
             }
+           
+
+           
         }catch(PDOException $e){
             echo $e->getMessage();
         }
