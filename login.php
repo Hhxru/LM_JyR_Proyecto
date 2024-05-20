@@ -11,6 +11,7 @@
         <h1>MediaGestCT</h1>
     </header>
     <section class="login">
+        
         <form class="loginFormulario" method="post">
             <h2>
                 <img src="img/OIG2-removebg-preview.png" alt="">
