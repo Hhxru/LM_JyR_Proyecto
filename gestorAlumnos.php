@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< Updated upstream
     <title>Dashboard Tutor</title>
     <link rel="stylesheet" href="css/dashboardTutor.css">
 </head>
@@ -11,7 +10,7 @@
     <header>
         <h1>MediaGestCT</h1>
         <ul>
-            <li><a href="dashboardTutor.php">Alumnos</a></li>
+            <li><a href="gestorEmpresas.php">Empresas</a></li>
             <li><a href="">Usuario </a></li>
         </ul>
         <div id="logo">
@@ -225,22 +224,3 @@
     </section>
 </body>
 </html>     
-=======
-    <title>Document</title>
-</head>
-<body>
-    <header>
-            <h1>MediaGestCT</h1>
-            <ul>
-                <li><a href="dashboardTutor.php">Alumnos</a></li>
-                <li><a href="">Usuario </a></li>
-                <li><a href="gestorEmpresas.php">Empresas</a></li>
-            </ul>
-            <div id="logo">
-                <img src="img/OIG2-removebg-preview.png" alt="">
-            </div>
-        </header> 
-    
-</body>
-</html>
->>>>>>> Stashed changes
