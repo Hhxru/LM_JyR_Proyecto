@@ -60,7 +60,7 @@
             </article>
 
             <article id="altaUsuarios">
-                    <form id="formularioAlta" action="dashboardTutor.php" method="post">
+                    <form id="formularioAlta" action="gestorAlumnos.php" method="post">
                         <h2 class="text">Alta usuarios</h2>
                         <input type="email" class="textbox" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
                         <input type="text" class="textbox" name="nia" placeholder="NIA" pattern="[0-9]*" minlength="8" maxlength="8" required> 
@@ -109,7 +109,7 @@
 
         <article id="tabla">
             <h1 class="text">Busqueda de alumnos</h1>
-            <form action="dashboardTutor.php" method="post">
+            <form action="gestorAlumnos.php" method="post">
                     <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
                     <input class="button" type="submit" value="Buscar">
             </form>

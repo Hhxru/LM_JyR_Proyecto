@@ -62,7 +62,7 @@
         </article>
         <article id="tabla">
             <h1 class="text">Busqueda de empresas</h1>
-            <form action="dashboardTutor.php" method="post">
+            <form action="dashboardAlumno.php" method="post">
                     <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
                     <input class="button" type="submit" value="Buscar">
             </form>
@@ -125,7 +125,7 @@
             $sql = "SELECT * FROM empresa Where true";
 
             if(!empty($buscar)){
-                $sql .= " and nombre = :buscar";
+                $sql .= " and nombre_fiscal = :buscar";
                 $datos [":buscar"]=$buscar;
             }else{
                 $sql .= " limit 10 offset $mostrar_pag";
@@ -148,16 +148,6 @@
                         echo"No hay datos relacionados.";
                     }
 
-                    if(isset($_GET['id'])){
-                        $sql = "DELETE FROM empresa WHERE email = \"$id\"";
-                        print($id);
-                        print($sql);
-                        //$datos [":eliminar"]=$del;
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute($datos);
-                        echo"Usuario eliminado con éxito";
-                        echo '<script>window.location.href = "dashboardTutor.php";</script>';
-                    }
                     
                 //}
 
