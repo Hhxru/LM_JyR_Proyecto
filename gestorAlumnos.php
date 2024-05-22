@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Tutor</title>
-    <link rel="stylesheet" href="css/dashboardTutor.css">
+    <link rel="stylesheet" href="css/Template.css">
 </head>
 <body>
     <header>
         <h1>MediaGestCT</h1>
         <ul>
-            <li><a href="dashboardTutor.php">Alumnos</a></li>
+            <li><a href="gestorAlumnos.php">Alumnos</a></li>
             <li><a href="">Usuario </a></li>
         </ul>
         <div id="logo">

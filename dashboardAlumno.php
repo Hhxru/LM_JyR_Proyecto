@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Alumno</title>
-    <link rel="stylesheet" href="css/dashboardTutor.css">
+    <link rel="stylesheet" href="css/Template.css">
 </head>
 <body>
     <header>
@@ -41,8 +41,7 @@
                 
                 # Para que genere excepciones a la hora de reportar errores.
                 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
-    
-            ?> 
+     ?> 
     <section id="cuerpoPrincipal">
         <article id="usuario">
             <article>
