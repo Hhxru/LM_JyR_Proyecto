@@ -214,13 +214,12 @@
         ?>
         
             </table>
-            <form id="formAlumnos" action="dashboardTutor.php" method="post">
+            <form id="formAlumnos" action="gestorAlumnos.php" method="post">
                 <input type="submit" class="button" name="ant_pag" value="<">
                 <input type="number"  name="pagina" <?php echo "value=".$page;?>>
                 <input type="submit" class="button" name="ir" value="IR">
                 <input type="submit" class="button" name="sig_pag" value=">">
             </form>
         </article>
-    </section>
 </body>
 </html>     

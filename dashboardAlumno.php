@@ -17,12 +17,40 @@
             <img src="img/OIG2-removebg-preview.png" alt="">
         </div>
     </header> 
+
     <?php
-        $host='localhost';
-        $dbname='fct';
-        $user='root';
-        $pass='';
-    ?>
+
+            $buscar=$_POST['buscar'] ?? null;
+            $resultadosPag = 10;
+            $page = $_POST['pagina'] ?? 1;
+            $sig_pag = $_POST['sig_pag'] ?? null;
+            $ant_pag = $_POST['ant_pag'] ?? null;
+            $ir = $_POST['ir'] ?? null;
+            $id = $_GET['id'] ?? null;
+            $userLog = $_GET['user'] ?? null;
+
+            //variables de altas
+            $alta = $_POST['alta'] ?? null;
+            $email = $_POST['email'] ?? "";
+            $nia = $_POST['nia'] ?? null;
+            $tel = $_POST['telefono'] ?? null;
+            $nombre = $_POST['nombre'] ?? "";
+            $password = $_POST['contrasena'] ?? null;
+
+            $host='localhost';
+            $dbname='fct';
+            $user='root';
+            $pass='';
+
+            try {
+                # MySQL con PDO_MYSQL
+                # Para que la conexion al mysql utilice las collation UTF-8 añadir charset=utf8 al string de la conexion.
+                $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+                
+                # Para que genere excepciones a la hora de reportar errores.
+                $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
+    
+            ?> 
     <section id="cuerpoPrincipal">
         <article id="usuario">
             <article>
@@ -41,14 +69,113 @@
             <p></p>
                 <table>
                     <tr>
-                    <th class="tdmain">Nombre</th>
+                    <th class="tdmain">Nombre Fiscal</th>
                     <th class="tdmain">Telefono</th>
                     <th class="tdmain">Email</th>
-                    <th class="tdmain">Web</th>
-                    <th class="tdmain">--</th>
+                    <th class="tdmain">Persona Contacto</th>
+                    <th class="tdmain">Plazas</th>
+                    <th class="tdmain">Localidad</th>
                     </tr>
-                </table>
             </article>
+            <article>
+            <?php
+            $datos = [];
+            //query para recoger el numero de datos
+            $totalFilas = "SELECT count(*) as filas_totales FROM empresa";
+            $stmt = $pdo->prepare($totalFilas);
+            $stmt->execute($datos);
+            $totalDatos=$stmt->fetch();
+
+
+            //capturar el numero de filas por el alias de la query
+            $totalFilas = $totalDatos['filas_totales'];
+            
+            //paginas totales a paginar y edondear alto el resultado
+            $totalPag = ceil($totalFilas / $resultadosPag);                
+
+
+            //si pulsa el boton ">" pagina +1
+            if(isset($_POST['sig_pag'])){
+                $page ++;
+            }if($page>$totalPag){
+                $page=$totalPag;
+                echo "No existen más datos sobre la busqueda relacionada";
+            }
+
+            if(isset($ir) and $page>$totalPag){
+                $page=$totalPag;
+            }if(isset($ir) and $page<1){
+                $page=1;
+            }
+
+            //si pulsa el boton "<" pagina -1
+            if(isset($_POST['ant_pag'])){
+                $page--;
+            }if($page<1){
+                $page=1;
+            }
+
+            //parsear el numero introducido a int
+            $num_pag=intval($page);
+
+            //mostrar pagina con: pagina-1 * resultados por pagina(=10)
+            $mostrar_pag = ($num_pag - 1) * $resultadosPag;
+            
+            //query para mostrar los datos
+            $sql = "SELECT * FROM empresa Where true";
+
+            if(!empty($buscar)){
+                $sql .= " and nombre = :buscar";
+                $datos [":buscar"]=$buscar;
+            }else{
+                $sql .= " limit 10 offset $mostrar_pag";
+            }
+            
+        
+            //ejecutar consulta
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($datos);
+
+                //mientras i sea menor a los resultados(10) repetir
+                //for($i=1; $i<=$resultados_pag; $i++){
+                    while($row=$stmt->fetch()){
+                        echo "<tr>"."<td>".$row['nombre_fiscal']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['email']."</td>"."<td>".$row['persona_contacto']."</td>"."<td>".$row['numero_plazas']."</td>"."<td>".$row['localidad']."</td>";
+
+
+                        "</td>"."</tr>";
+                    }
+                    if($row['email']=null){
+                        echo"No hay datos relacionados.";
+                    }
+
+                    if(isset($_GET['id'])){
+                        $sql = "DELETE FROM empresa WHERE email = \"$id\"";
+                        print($id);
+                        print($sql);
+                        //$datos [":eliminar"]=$del;
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute($datos);
+                        echo"Usuario eliminado con éxito";
+                        echo '<script>window.location.href = "dashboardTutor.php";</script>';
+                    }
+                    
+                //}
+
+            }catch(PDOException $e){
+                echo "Error de conexion con la BD";
+            }
+        ?>
+        
+            </table>
+            <form id="formAlumnos" action="dashboardAlumno.php" method="post">
+                <input type="submit" class="button" name="ant_pag" value="<">
+                <input type="number"  name="pagina" <?php echo "value=".$page;?>>
+                <input type="submit" class="button" name="ir" value="IR">
+                <input type="submit" class="button" name="sig_pag" value=">">
+            </form>
+        </article>
+            </article>
+            
     </section>
 </body>
 </html>     

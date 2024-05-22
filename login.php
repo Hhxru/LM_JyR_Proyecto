@@ -62,7 +62,7 @@
                 //echo"Inicio de sesión como tutor";
 
                 //enviar nombre de usuario correspondiente al correo
-                echo"<script>window.location.href = 'dashboardTutor.php?user=".$result['user']."';</script>";
+                echo"<script>window.location.href = 'gestorAlumnos.php?user=".$result['user']."';</script>";
                 
                 }if(empty($result)){
                 $sql = "SELECT email, passwrd, nombre as user FROM alumno WHERE email='$email' and passwrd='$password'";
