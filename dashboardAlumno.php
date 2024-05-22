@@ -29,14 +29,6 @@
             $id = $_GET['id'] ?? null;
             $userLog = $_GET['user'] ?? null;
 
-            //variables de altas
-            $alta = $_POST['alta'] ?? null;
-            $email = $_POST['email'] ?? "";
-            $nia = $_POST['nia'] ?? null;
-            $tel = $_POST['telefono'] ?? null;
-            $nombre = $_POST['nombre'] ?? "";
-            $password = $_POST['contrasena'] ?? null;
-
             $host='localhost';
             $dbname='fct';
             $user='root';
@@ -58,6 +50,9 @@
                 <p>Nombre: <?php  echo"$userLog"?></p>
                 <p>Email: x@y.com</p>
                 <p>Iniciado como: Alumno</p>
+            </article>
+            <article>
+                
             </article>
         </article>
         <article id="tabla">
