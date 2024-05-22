@@ -186,7 +186,7 @@
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
                     while($row=$stmt->fetch()){
-                        echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<button class=\"button\" onclick=\"window.location='modificarAlu.php?id=".$row['email']."'\">Editar</button>"."<button class=\"button\" onclick=\"window.location='dashboardTutor.php?id=".$row['email']."'\">Eliminar</button>";
+                        echo "<tr>"."<td>".$row['email']."</td>"."<td>".$row['nia']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['nombre']."</td>"."<td>".$row['cv_file']."</td>"."<td>".$row['passwrd']."</td>"."<td>"."<button class=\"button\" onclick=\"window.location='modificarAlu.php?id=".$row['email']."'\">Editar</button>"."<button class=\"button\" onclick=\"window.location='gestorAlumnos.php?id=".$row['email']."'\">Eliminar</button>";
 
 
                         "</td>"."</tr>";
@@ -203,7 +203,7 @@
                         $stmt = $pdo->prepare($sql);
                         $stmt->execute($datos);
                         echo"Usuario eliminado con éxito";
-                        echo '<script>window.location.href = "dashboardTutor.php";</script>';
+                        echo '<script>window.location.href = "gestorAlumnos.php";</script>';
                     }
                     
                 //}
