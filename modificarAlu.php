@@ -28,6 +28,7 @@
             $tel = $_POST['telefono'] ?? null;
             $nombre = $_POST['nombre'] ?? null;
             $password = $_POST['contrasena'] ?? null;
+            $modificar = $_POST['modificar'] ?? null;
 
             $host='localhost';
             $dbname='fct';
@@ -60,7 +61,7 @@
             <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>
             <input type="text" class="textbox" name="nombre" placeholder="Nombre" value="<?php print($usuario['nombre'])?>" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
             <input type="password" class="textbox" name="contrasena" placeholder="Contraseña" value="<?php print($usuario['passwrd'])?>" minlength="4" required>
-            <input type="submit" class="button" value="Modificar">
+            <input type="submit" class="button" name="modificar" value="Modificar">
             </form>
 
            <a href="dashboardTutor.php"> <input type="submit" class="button" value="Volver"></a>
@@ -78,11 +79,10 @@
                 */
             ];
 
-            $sql = "UPDATE alumno SET nia = \"$nia\", telefono = \"$tel\", nombre = \"$nombre\", passwrd = \"$password\" WHERE email = \"$email\"";
-            $stmt = $pdo->prepare($sql);
-            $usuario = $stmt->execute($datos);
-
-            if($usuario){
+            if(isset($_POST['modificar'])){
+                $sql = "UPDATE alumno SET nia = '$nia', telefono = '$tel', nombre = '$nombre', passwrd = '$password' WHERE email = '$email'";
+                $stmt = $pdo->prepare($sql);
+                $usuario = $stmt->execute($datos);
                 echo "Usuario modificado con éxito";
             }else{
                 echo "Upps!!! Algo salió mal";

@@ -11,6 +11,7 @@
         <h1>MediaGestCT</h1>
     </header>
     <section class="login">
+        
         <form class="loginFormulario" method="post">
             <h2>
                 <img src="img/OIG2-removebg-preview.png" alt="">
@@ -29,6 +30,11 @@
         </form>
     </section>
 
+        /**
+    * @version 1.0
+    * @author rpard & Hhxru
+    * @since 23/05/2024
+    */
     <?php
 
         $host='localhost';
@@ -57,31 +63,30 @@
             
             if(isset($_POST['sesion'])){
                 if(!empty($result)){
-                //si encuentra datos relacionados inicia sesión
-                //echo"Inicio de sesión como tutor";
+                    //si encuentra datos relacionados inicia sesión
+                    //echo"Inicio de sesión como tutor";
 
-                //enviar nombre de usuario correspondiente al correo
-                echo"<script>window.location.href = 'dashboardTutor.php?user=".$result['user']."';</script>";
-                
-                }if(empty($result)){
-                $sql = "SELECT email, passwrd, nombre as user FROM alumno WHERE email='$email' and passwrd='$password'";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute($datos);
-                $result = $stmt->fetch();
+                    //enviar nombre de usuario correspondiente al correo
+                    echo"<script>window.location.href = 'gestorAlumnos.php?user=".$result['user']."';</script>";
+                }
 
-                }if(!empty($result)){
-                //si encuentra datos relacionados inicia sesión
-                //echo"Inicio de sesión como alumno";
-                
-                //enviar nombre de usuario correspondiente al correo
-                echo"<script>window.location.href = 'dashboardAlumno.php?user=".$result['user']."';</script>";
+                if(empty($result)){
+                    $sql = "SELECT email, passwrd, nombre as user FROM alumno WHERE email='$email' and passwrd= '$password'";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute($datos);
+                    $result = $stmt->fetch();
+                }
 
+                if(!empty($result)){
+                    //si encuentra datos relacionados inicia sesión
+                    //echo"Inicio de sesión como alumno";
+                    
+                    //enviar nombre de usuario correspondiente al correo
+                    echo"<script>window.location.href = 'dashboardAlumno.php?user=".$result['user']."';</script>";
                 }else{
-                echo "Usuario no registrado";
+                    echo "Usuario no registrado";
                 }
             }
-           
-
            
         }catch(PDOException $e){
             echo $e->getMessage();
