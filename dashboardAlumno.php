@@ -72,6 +72,7 @@
                     </tr>
             </article>
             <article>
+                
             <?php
             $datos = [];
             //query para recoger el numero de datos
@@ -133,11 +134,16 @@
                 //mientras i sea menor a los resultados(10) repetir
                 //for($i=1; $i<=$resultados_pag; $i++){
                     while($row=$stmt->fetch()){
-                        echo "<tr>"."<td>".$row['nombre_fiscal']."</td>"."<td>".$row['telefono']."</td>"."<td>".$row['email']."</td>"."<td>".$row['persona_contacto']."</td>"."<td>".$row['numero_plazas']."</td>"."<td>".$row['localidad']."</td>";
-
-
-                        "</td>"."</tr>";
+                        echo "<tr>
+                            <td>".$row['nombre_fiscal']."</td> 
+                            <td>".$row['telefono']."</td>
+                            <td>".$row['email']."</td>
+                            <td>".$row['persona_contacto']."</td>
+                            <td>".$row['numero_plazas']."</td>
+                            <td>".$row['localidad']."</td>
+                            </tr>";
                     }
+
                     if($row['email']=null){
                         echo"No hay datos relacionados.";
                     }
