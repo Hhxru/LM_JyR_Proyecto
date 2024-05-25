@@ -50,16 +50,16 @@
                 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );      
             ?> 
             
-            <section id="cuerpoPrincipal">
-                <article id="usuario">
-                    <article>
-                        <h2 class="text">Informacion de usuario</h2>
-                        <p>Nombre: <?php  echo"$userLog"?></p>
-                        <p>Email: x@y.com</p>
-                        <p>Iniciado como: Tutor</p>
-                    </article>
+                <section id="cuerpoPrincipal">
+                    <article id="usuario">
+                        <article>
+                            <h2 class="text">Informacion de usuario</h2>
+                            <p>Nombre: <?php  echo"$userLog"?></p>
+                            <p>Email: x@y.com</p>
+                            <p>Iniciado como: Tutor</p>
+                        </article>
 
-                    <article id="altaUsuarios">
+                        <article id="altaUsuarios">
                             <form id="formularioAlta" action="gestorAlumnos.php" method="post">
                                 <h2 class="text">Alta usuarios</h2>
                                 <input type="email" class="textbox" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
@@ -71,7 +71,7 @@
                                 <input type="reset" class="button" value="Borrar datos">
                             </form>
 
-                        <?php
+                            <?php
                                 $sql = "insert into alumno (email, nia, telefono, nombre, passwrd) values (:email, :nia, :telefono, :nombre, :password)";
 
 
@@ -89,152 +89,162 @@
                                     echo"Usuario registrado con éxito";
                                 }
 
-                        ?>
-                    </article> 
-                </article>       
+                            ?>
+                        </article> 
+                    </article>       
 
-                <article id="tabla">
-                    <h1 class="text">Busqueda de alumnos</h1>
-                    <form action="gestorAlumnos.php" method="post">
-                            <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
-                            <input class="button" type="submit" value="Buscar">
-                    </form>
-                    <table>
-                        <tr>
-                        <th class="tdmain">Email</th>
-                        <th class="tdmain">NIA</th>
-                        <th class="tdmain">Telefono</th>
-                        <th class="tdmain">Nombre</th>
-                        <th class="tdmain">CV_FILE</th>
-                        <th class="tdmain">Contraseña</th>
-                        <th class="tdmain">--</th>
-                        </tr>
+                    <article id="tabla">
+                        <h1 class="text">Busqueda de alumnos</h1>
+                        <form action="gestorAlumnos.php" method="post">
+                                <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
+                                <input class="button" type="submit" value="Buscar">
+                        </form>
+                        <table>
+                            <tr>
+                            <th class="tdmain">Email</th>
+                            <th class="tdmain">NIA</th>
+                            <th class="tdmain">Telefono</th>
+                            <th class="tdmain">Nombre</th>
+                            <th class="tdmain">CV_FILE</th>
+                            <th class="tdmain">Contraseña</th>
+                            <th class="tdmain">--</th>
+                            </tr>
 
-                    <?php
+                            <?php
 
-                    $datos = [];
+                            $datos = [];
 
-                    //query para recoger el numero de datos
-                    $totalFilas = "SELECT count(*) as filas_totales FROM alumno WHERE true";
+                            //query para recoger el numero de datos
+                            $totalFilas = "SELECT count(*) as filas_totales FROM alumno WHERE true";
 
-                    if(!empty($buscar)){
-                        $totalFilas .= " and nombre = :buscar";
-                        $datos [":buscar"]=$buscar;
-                    }
+                            if(!empty($buscar)){
+                                $totalFilas .= " and nombre = :buscar";
+                                $datos [":buscar"]=$buscar;
+                            }
 
-                    $stmt = $pdo->prepare($totalFilas);
-                    $stmt->execute($datos);
-                    $totalDatos=$stmt->fetch();
-
-
-                    //capturar el numero de filas por el alias de la query
-                    $totalFilas = $totalDatos['filas_totales'];
-                    
-                    //paginas totales a paginar y redondear alto el resultado
-                    $totalPag = ceil($totalFilas / $resultadosPag);                
+                            $stmt = $pdo->prepare($totalFilas);
+                            $stmt->execute($datos);
+                            $totalDatos=$stmt->fetch();
 
 
-                    //si pulsa el boton ">" pagina +1
-                    if(isset($_POST['sig_pag'])){
-                        $page ++;
-                    }
-                    
-                    if($page>$totalPag){
-                        $page=$totalPag;
-                        echo "No existen más datos sobre la busqueda relacionada";
-                    }
+                            //capturar el numero de filas por el alias de la query
+                            $totalFilas = $totalDatos['filas_totales'];
+                            
+                            //paginas totales a paginar y redondear alto el resultado
+                            $totalPag = ceil($totalFilas / $resultadosPag);                
 
-                    if(isset($ir) and $page>$totalPag){
-                        $page=$totalPag;
-                    }
-                    
-                    if(isset($ir) and $page<1){
-                        $page=1;
-                    }
 
-                    //si pulsa el boton "<" pagina -1
-                    if(isset($_POST['ant_pag'])){
-                        $page--;
-                    }
-                    
-                    if($page<1){
-                        $page=1;
-                    }
+                            //si pulsa el boton ">" pagina +1
+                            if(isset($_POST['sig_pag'])){
+                                $page ++;
+                            }
 
-                    //parsear el numero introducido a int
-                    $num_pag=intval($page);
-
-                    //mostrar pagina con: pagina-1 * resultados por pagina(=10)
-                    $mostrar_pag = ($num_pag - 1) * $resultadosPag;
-
-                    //inicializar a 0 datos
-                    $datos=[];
-
-                    //query para mostrar los datos
-                    $sql = "SELECT * FROM alumno Where true";
-
-                    if(!empty($buscar)){
-                        $sql .= " and nombre = :buscar";
-                        $datos [":buscar"]=$buscar;
-                    }
-                    
-                    $sql .= " limit 10 offset $mostrar_pag";
-                    
-                
-                    //ejecutar consulta
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute($datos);
-
-                        //mientras i sea menor a los resultados(10) repetir
-                        //for($i=1; $i<=$resultados_pag; $i++){
-                            while($row=$stmt->fetch()){
-                                echo "<tr>
-                                    <td>".$row['email']."</td>
-                                    <td>".$row['nia']."</td>
-                                    <td>".$row['telefono']."</td>
-                                    <td>".$row['nombre']."</td>
-                                    <td>".$row['cv_file']."</td>
-                                    <td>".$row['passwrd']."</td>
-                                    <td>
-                                        <button class='button' onclick='window.location='modificarAlu.php?id=".$row['email']."'>Editar</button>
-                                        <button class= 'button' onclick='window.location='gestorAlumnos.php?id=".$row['email']."'>Eliminar</button>
-                                    </td>
-                                    </tr>";
+                            //si pulsa el boton "<" pagina -1
+                            if(isset($_POST['ant_pag'])){
+                                $page--;
                             }
                             
-                            if($row['email']=null){
-                                echo"No hay datos relacionados.";
+                            if($page>$totalPag){
+                                $page=$totalPag;
+                                echo "No existen más datos sobre la busqueda relacionada";
                             }
 
-                            if(isset($_GET['id'])){
-                                $sql = "DELETE FROM alumno WHERE email = '$id'";
-                                print($id);
-                                print($sql);
-                                //$datos [":eliminar"]=$del;
-                                $stmt = $pdo->prepare($sql);
-                                $stmt->execute($datos);
-                                echo"Usuario eliminado con éxito";
-                                echo '<script>window.location.href = "gestorAlumnos.php";</script>';
+                            if($page<1){
+                                $page=1;
+                            }
+
+                            
+                            
+                            //parsear el numero introducido a int
+                            $num_pag=intval($page);
+
+                            //mostrar pagina con: pagina-1 * resultados por pagina(=10)
+                            $mostrar_pag = ($num_pag - 1) * $resultadosPag;
+
+                            //inicializar a 0 datos
+                            $datos=[];
+
+                            //query para mostrar los datos
+                            $sql = "SELECT * FROM alumno Where true";
+
+                            if(!empty($buscar)){
+                                $sql .= " and nombre = :buscar";
+                                $datos [":buscar"]=$buscar;
                             }
                             
-                        //}
+                            $sql .= " limit 10 offset $mostrar_pag";
+                            
+                        
+                            //ejecutar consulta
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute($datos);
 
+                                //mientras i sea menor a los resultados(10) repetir
+                                //for($i=1; $i<=$resultados_pag; $i++){
+                                    while($row=$stmt->fetch()){
+                                        echo "<tr>
+                                            <td>".$row['email']."</td>
+                                            <td>".$row['nia']."</td>
+                                            <td>".$row['telefono']."</td>
+                                            <td>".$row['nombre']."</td>
+                                            <td>".$row['cv_file']."</td>
+                                            <td>".$row['passwrd']."</td>
+                                            <td>
+                                                <button class= button onclick=window.location='modificarAlu.php?id=".$row['email']."'>Editar</button>
+                                                <button class= button onclick=window.location='gestorAlumnos.php?id=".$row['email']."'>Eliminar</button>
+                                            </td>
+                                            </tr>";
+                                    }
+                                    
+                                    if($row['email']=null){
+                                        echo"No hay datos relacionados.";
+                                    }
 
-                    }catch(PDOException $e){
-                        //echo "Error de conexion con la BD";
-                        echo $e->getMessage();
-                    }
-                ?>
+                                    if(isset($_GET['id'])){
+                                        $sql = "DELETE FROM alumno WHERE email = '$id'";
+                                        print($id);
+                                        print($sql);
+                                        //$datos [":eliminar"]=$del;
+                                        $stmt = $pdo->prepare($sql);
+                                        $stmt->execute($datos);
+                                        echo"Usuario eliminado con éxito";
+                                        echo '<script>window.location.href = "gestorAlumnos.php";</script>';
+                                    }
+                                    
+                                //}
+                            ?>
+                        </table>
+
+                        <?php
+
+                            echo "<form id=formAlumnos action=gestorAlumnos.php method=post>";
+                            if($page!=1){
+                                echo"<input type=submit class=button name= ant_pag value='<'>";
+                            }
+
+                            echo"<input type=number  name=pagina value=$page>
+                            <input type=submit class=button name=ir value=IR>";
+
+                            if($page!=$totalPag){
+                                echo"<input type=submit class=button name=sig_pag
+                                value='>'>";
+                            }
+                            echo"</form>";
+
+                }catch(PDOException $e){
+                    //echo "Error de conexion con la BD";
+                    echo $e->getMessage();
+                }
+                    ?>
+
+                    
                 
-                    </table>
+                
+                    
                     <form id="formAlumnos" action="gestorAlumnos.php" method="post">
-                        <input type="submit" class="button" name="ant_pag" value="<">
-                        <input type="number"  name="pagina" <?php echo "value=".$page;?>>
-                        <input type="submit" class="button" name="ir" value="IR">
-                        <input type="submit" class="button" name="sig_pag"
-                        value=">">
-                        <button onclick="windows.location"></button>
-
+                        
+                        
+    
                     </form>
             </article>
 </body>
