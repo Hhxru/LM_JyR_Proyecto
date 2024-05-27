@@ -64,7 +64,7 @@
             <input type="submit" class="button" name="modificar" value="Modificar">
             </form>
 
-           <a href="dashboardTutor.php"> <input type="submit" class="button" value="Volver"></a>
+           <a href="gestorAlumnos.php"> <input type="submit" class="button" value="Volver"></a>
 
 
             <?php
