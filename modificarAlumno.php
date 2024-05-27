@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Alumno</title>
-    <link rel="stylesheet" href="css/modificarAlu.css">
+    <link rel="stylesheet" href="css/modificar.css">
 </head>
 <body>
     <header>
@@ -55,7 +55,7 @@
 
             <h2>Modificar Alumno</h2>
 
-            <form action="modificarAlu.php" method="post">
+            <form action="modificarAlumno.php" method="post">
             <input type="email" class="textbox" name="email" value="<?php print($usuario['email'])?>" readonly>
             <input type="text" class="textbox" name="nia" placeholder="NIA" value="<?php print($usuario['nia'])?>" pattern="[0-9]*" minlength="8" maxlength="8" required>
             <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>

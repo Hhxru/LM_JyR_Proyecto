@@ -10,6 +10,7 @@
     <header>
         <h1>MediaGestCT</h1>
         <ul>
+            <li><a href="dashboardTutor.php">Inicio</a></li>
             <li><a href="gestorEmpresas.php">Empresas</a></li>
             <li><a href="">Usuario </a></li>
         </ul>
@@ -19,29 +20,29 @@
     </header> 
 
         <?php
-        $buscar=$_POST['buscar'] ?? null;
-        $resultadosPag = 10;
-        $page = $_POST['pagina'] ?? 1;
-        $sig_pag = $_POST['sig_pag'] ?? null;
-        $ant_pag = $_POST['ant_pag'] ?? null;
-        $ir = $_POST['ir'] ?? null;
-        $id = $_GET['id'] ?? null;
-        $userLog = $_GET['user'] ?? null;
+            $buscar=$_POST['buscar'] ?? null;
+            $resultadosPag = 10;
+            $page = $_POST['pagina'] ?? 1;
+            $sig_pag = $_POST['sig_pag'] ?? null;
+            $ant_pag = $_POST['ant_pag'] ?? null;
+            $ir = $_POST['ir'] ?? null;
+            $id = $_GET['id'] ?? null;
+            $userLog = $_GET['user'] ?? null;
 
-        //variables de altas
-        $alta = $_POST['alta'] ?? null;
-        $email = $_POST['email'] ?? "";
-        $nia = $_POST['nia'] ?? null;
-        $tel = $_POST['telefono'] ?? null;
-        $nombre = $_POST['nombre'] ?? "";
-        $password = $_POST['contrasena'] ?? null;
+            //variables de altas
+            $alta = $_POST['alta'] ?? null;
+            $email = $_POST['email'] ?? "";
+            $nia = $_POST['nia'] ?? null;
+            $tel = $_POST['telefono'] ?? null;
+            $nombre = $_POST['nombre'] ?? "";
+            $password = $_POST['contrasena'] ?? null;
 
-        $host='localhost';
-        $dbname='fct';
-        $user='root';
-        $pass='';
+            $host='localhost';
+            $dbname='fct';
+            $user='root';
+            $pass='';
 
-        try {
+            try {
             # MySQL con PDO_MYSQL
             # Para que la conexion al mysql utilice las collation UTF-8 añadir charset=utf8 al string de la conexion.
             $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
@@ -190,7 +191,7 @@
                                     <td>".$row['cv_file']."</td>
                                     <td>".$row['passwrd']."</td>
                                     <td>
-                                        <button class= button onclick=window.location='modificarAlu.php?id=".$row['email']."'>Editar</button>
+                                        <button class= button onclick=window.location='modificarAlumno.php?id=".$row['email']."'>Editar</button>
                                         <button class= button onclick=window.location='gestorAlumnos.php?id=".$row['email']."'>Eliminar</button>
                                     </td>
                                 </tr>";

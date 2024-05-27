@@ -50,10 +50,8 @@
                 <p>Email: x@y.com</p>
                 <p>Iniciado como: Alumno</p>
             </article>
-            <article>
-                
-            </article>
         </article>
+        
         <article id="tabla">
             <h1 class="text">Busqueda de empresas</h1>
             <form action="dashboardAlumno.php" method="post">

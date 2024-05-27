@@ -168,13 +168,13 @@
             </form>
                 <table>
                     <tr>
-                    <th class="tdmain">Nombre</th>
-                    <th class="tdmain">CIF/NIF</th>
-                    <th class="tdmain">Email</th>
-                    <th class="tdmain">Localidad</th>
-                    <th class="tdmain">Telefono</th>
-                    <th class="tdmain">Nº Plazas</th>
-                    <th class="tdmain">--</th>
+                        <th class="tdmain">Nombre</th>
+                        <th class="tdmain">CIF/NIF</th>
+                        <th class="tdmain">Email</th>
+                        <th class="tdmain">Localidad</th>
+                        <th class="tdmain">Telefono</th>
+                        <th class="tdmain">Nº Plazas</th>
+                        <th class="tdmain">--</th>
                     </tr>
             </article>
             <article>
