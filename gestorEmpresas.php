@@ -53,7 +53,7 @@
                 
                 # Para que genere excepciones a la hora de reportar errores.
                 $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
-     ?> 
+    ?> 
 
     <section id="cuerpoPrincipal">
         <article id="usuario">
@@ -132,40 +132,40 @@
                     <input type="reset" class="button" value="Borrar datos">
             </form>
 
-                <?php
-                        $sql = "INSERT INTO alumno (nombre, cif, nombre_fiscal, email, direccion, localidad, provincia, num_plazas, telefono, per_contact) FROM empresa VALUES (:nombre, :cif, :nombre_fiscal, :email, :direccion, :localidad, :provincia, :num_plazas, :telefono, :per_contact)";
+            <?php
+
+                $sql = "INSERT INTO alumno (nombre, cif, nombre_fiscal, email, direccion, localidad, provincia, num_plazas, telefono, per_contact) FROM empresa VALUES (:nombre, :cif, :nombre_fiscal, :email, :direccion, :localidad, :provincia, :num_plazas, :telefono, :per_contact)";
+
+                $datos=[
+                    ":nombre"=>$nombre,
+                    ":cif"=>$cif,
+                    ":nombre_fiscal"=>$nombreFiscal,
+                    ":email"=>$email,
+                    ":direccion"=>$direccion,
+                    ":localidad"=>$localidad,
+                    ":provincia"=>$provincia,
+                    ":num_plazas"=>$numPlaza,
+                    ":telefono"=>$telefono,
+                    ":per_contact"=>$contacto
+                ];
 
 
-                        $datos=[
-                            ":nombre"=>$nombre,
-                            ":cif"=>$cif,
-                            ":nombre_fiscal"=>$nombreFiscal,
-                            ":email"=>$email,
-                            ":direccion"=>$direccion,
-                            ":localidad"=>$localidad,
-                            ":provincia"=>$provincia,
-                            ":num_plazas"=>$numPlaza,
-                            ":telefono"=>$telefono,
-                            ":per_contact"=>$contacto
-                        ];
-
-
-                        if(isset($_POST['alta'])){
-                            $stmt = $pdo->prepare($sql);
-                            $row = $stmt->execute($datos);
-                            echo"Empresa registrada con éxito";
-                        }
-                ?>
+                if(isset($_POST['alta'])){
+                    $stmt = $pdo->prepare($sql);
+                    $row = $stmt->execute($datos);
+                    echo"Empresa registrada con éxito";
+                }
+            ?>
 
             </article>
         </article>
+
         <article id="tabla">
             <h1 class="text">Busqueda de empresas</h1>
             <form action="gestorEmpresas.php" method="post">
                     <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
                     <input class="button" type="submit" value="Buscar">
             </form>
-            <p></p>
                 <table>
                     <tr>
                     <th class="tdmain">Nombre</th>
@@ -174,99 +174,135 @@
                     <th class="tdmain">Localidad</th>
                     <th class="tdmain">Telefono</th>
                     <th class="tdmain">Nº Plazas</th>
+                    <th class="tdmain">--</th>
                     </tr>
             </article>
             <article>
 
             <?php
-            $datos = [];
-            //query para recoger el numero de datos
-            $totalFilas = "SELECT count(*) as filas_totales FROM empresa";
-            $stmt = $pdo->prepare($totalFilas);
-            $stmt->execute($datos);
-            $totalDatos=$stmt->fetch();
+
+                $datos = [];
+
+                //query para recoger el numero de datos
+                $totalFilas = "SELECT count(*) as filas_totales FROM empresa WHERE true";
+
+                if(!empty($buscar)){
+                    $totalFilas .= " and nombre = :buscar";
+                    $datos [":buscar"]=$buscar;
+                }
+
+                $stmt = $pdo->prepare($totalFilas);
+                $stmt->execute($datos);
+                $totalDatos=$stmt->fetch();
 
 
-            //capturar el numero de filas por el alias de la query
-            $totalFilas = $totalDatos['filas_totales'];
-            
-            //paginas totales a paginar y edondear alto el resultado
-            $totalPag = ceil($totalFilas / $resultadosPag);                
+                //capturar el numero de filas por el alias de la query
+                $totalFilas = $totalDatos['filas_totales'];
+                
+                //paginas totales a paginar y edondear alto el resultado
+                $totalPag = ceil($totalFilas / $resultadosPag);                
 
 
-            //si pulsa el boton ">" pagina +1
-            if(isset($_POST['sig_pag'])){
-                $page ++;
-            }if($page>$totalPag){
-                $page=$totalPag;
-                echo "No existen más datos sobre la busqueda relacionada";
-            }
+                //si pulsa el boton ">" pagina +1
+                if(isset($_POST['sig_pag'])){
+                    $page ++;
+                }
 
-            if(isset($ir) and $page>$totalPag){
-                $page=$totalPag;
-            }if(isset($ir) and $page<1){
-                $page=1;
-            }
+                //si pulsa el boton "<" pagina -1
+                if(isset($_POST['ant_pag'])){
+                    $page--;
+                }
+                
+                if($page>$totalPag){
+                    $page=$totalPag;
+                    echo "No existen más datos sobre la busqueda relacionada";
+                }
+                
+                if($page<1){
+                    $page=1;
+                }
 
-            //si pulsa el boton "<" pagina -1
-            if(isset($_POST['ant_pag'])){
-                $page--;
-            }if($page<1){
-                $page=1;
-            }
+                //parsear el numero introducido a int
+                $num_pag=intval($page);
 
-            //parsear el numero introducido a int
-            $num_pag=intval($page);
+                //mostrar pagina con: pagina-1 * resultados por pagina(=10)
+                $mostrar_pag = ($num_pag - 1) * $resultadosPag;
+                
+                //inicializar a 0 datos
+                $datos=[];
 
-            //mostrar pagina con: pagina-1 * resultados por pagina(=10)
-            $mostrar_pag = ($num_pag - 1) * $resultadosPag;
-            
-            //query para mostrar los datos
-            $sql = "SELECT * FROM empresa Where true";
+                //query para mostrar los datos
+                $sql = "SELECT * FROM empresa Where true";
 
-            if(!empty($buscar)){
-                $sql .= " and nombre = :buscar";
-                $datos [":buscar"]=$buscar;
-            }
+                if(!empty($buscar)){
+                    $sql .= " and nombre = :buscar";
+                    $datos [":buscar"]=$buscar;
+                }
+                
                 $sql .= " limit 10 offset $mostrar_pag";
+                
             
-        
-            //ejecutar consulta
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute($datos);
+                //ejecutar consulta
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($datos);
 
-                //mientras i sea menor a los resultados(10) repetir
-                //for($i=1; $i<=$resultados_pag; $i++){
-                    while($row=$stmt->fetch()){
-                        echo "<tr>
-                            <td>".$row['nombre']."</td> 
-                            <td>".$row['cif']."</td>
-                            <td>".$row['email']."</td>
-                            <td>".$row['localidad']."</td>
-                            <td>".$row['telefono']."</td>
-                            <td>".$row['numero_plazas']."</td>
-                            </tr>";
-                    }
-                    
-                    if($row['email']=null){
-                        echo"No hay datos relacionados.";
-                    }
+                    //mientras i sea menor a los resultados(10) repetir
+                    //for($i=1; $i<=$resultados_pag; $i++){
+                        while($row=$stmt->fetch()){
+                            echo "<tr>
+                                    <td>".$row['nombre']."</td> 
+                                    <td>".$row['cif']."</td>
+                                    <td>".$row['email']."</td>
+                                    <td>".$row['localidad']."</td>
+                                    <td>".$row['telefono']."</td>
+                                    <td>".$row['numero_plazas']."</td>
+                                    <td>
+                                        <button class= button onclick=window.location='modificarEmpresa.php?id=".$row['nombre']."'>Editar</button>
+                                        <button class= button onclick=window.location='gestorEmpresas.php?id=".$row['nombre']."'>Eliminar</button>
+                                    </td>
+                                </tr>";
+                        }
+                        
+                        if($row['nombre']=null){
+                            echo"No hay datos relacionados.";
+                        }
 
-                    
-                //}
+                        if(isset($_GET['id'])){
+                            $sql = "DELETE FROM empresa WHERE nombre = '$id'";
+                            print($id);
+                            print($sql);
+                            //$datos [":eliminar"]=$del;
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute($datos);
+                            echo"Usuario eliminado con éxito";
+                            echo '<script>window.location.href = "gestorEmpresas.php";</script>';
+                        }
+                        
+                    //}
 
-            }catch(PDOException $e){
-                echo $e->getMessage();
-            }
-        ?>
-        
+                }catch(PDOException $e){
+                    echo $e->getMessage();
+                }
+            ?>
             </table>
-            <form id="formAlumnos" action="gestorEmpresas.php" method="post">
-                <input type="submit" class="button" name="ant_pag" value="<">
-                <input type="number"  name="pagina" <?php echo "value=".$page;?>>
-                <input type="submit" class="button" name="ir" value="IR">
-                <input type="submit" class="button" name="sig_pag" value=">">
-            </form>
+            
+            <?php
+
+                    echo "<form id=formAlumnos action=gestorEmpresas.php method=post>";
+                    if($page!=1){
+                        echo"<input type=submit class=button name= ant_pag value='<'>";
+                    }
+
+                    echo"<input type=number  name=pagina value=$page>
+                    <input type=submit class=button name=ir value=IR>";
+
+                    if($page!=$totalPag){
+                        echo"<input type=submit class=button name=sig_pag
+                        value='>'>";
+                    }
+                    echo"</form>";
+
+            ?>
         </article>
             </article>
             
