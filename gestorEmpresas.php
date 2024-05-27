@@ -11,6 +11,7 @@
     <header>
         <h1>MediaGestCT</h1>
         <ul>
+            <li><a href="dashboardTutor.php">Inicio</a></li>
             <li><a href="gestorAlumnos.php">Alumnos</a></li>
             <li><a href="">Usuario </a></li>
         </ul>

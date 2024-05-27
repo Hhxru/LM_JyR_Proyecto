@@ -10,9 +10,9 @@
     <header>
             <h1>MediaGestCT</h1>
             <ul>
-                <li><a href="dashboardTutor.php">Alumnos</a></li>
-                <li><a href="">Usuario </a></li>
+                <li><a href="gestorAlumnos.php">Alumnos</a></li>
                 <li><a href="gestorEmpresas.php">Empresas</a></li>
+                <li><a href="">Usuario </a></li>
             </ul>
             <div id="logo">
                 <img src="img/OIG2-removebg-preview.png" alt="">
@@ -63,18 +63,16 @@
             
             <article id="tabla">
                 <h1 class="text">Busqueda de alumnos</h1>
-                <form action="gestorAlumnos.php" method="post">
+                <form action="dashboardTutor.php" method="post">
                         <input type="text" class="textbox" name="buscar" placeholder='Busqueda por nombre'>
                         <input class="button" type="submit" value="Buscar">
                 </form>
                 <table>
                     <tr>
-                    <th class="tdmain">Nombre</th>
-                    <th class="tdmain">CIF/NIF</th>
                     <th class="tdmain">Email</th>
-                    <th class="tdmain">Localidad</th>
-                    <th class="tdmain">Telefono</th>
-                    <th class="tdmain">Nº Plazas</th>
+                    <th class="tdmain">Empresa</th>
+                    <th class="tdmain">Fecha Fin</th>
+                    <th class="tdmain">Fecha Confirmacion</th>
                     <th class="tdmain">--</th>
                     </tr>
 
@@ -121,8 +119,7 @@
                             $page=1;
                         }
 
-                        
-                        
+                                                
                         //parsear el numero introducido a int
                         $num_pag=intval($page);
 
@@ -133,7 +130,7 @@
                         $datos=[];
 
                         //query para mostrar los datos
-                        $sql = "SELECT * FROM alumno Where true";
+                        $sql = "SELECT a.email, e.nombre, p.fecha_fin, p.fecha_confirmacion FROM alumno a LEFT JOIN practica p ON a.email=p.alumno_id LEFT JOIN empresa e ON e.nombre=p.empresa_id WHERE true";
 
                         if(!empty($buscar)){
                             $sql .= " and nombre = :buscar";
@@ -149,42 +146,39 @@
 
                             //mientras i sea menor a los resultados(10) repetir
                             //for($i=1; $i<=$resultados_pag; $i++){
+
+
                         while($row=$stmt->fetch()){
-                            echo "<tr>
-                                    <td>".$row['email']."</td>
-                                    <td>".$row['nia']."</td>
-                                    <td>".$row['telefono']."</td>
-                                    <td>".$row['nombre']."</td>
-                                    <td>".$row['cv_file']."</td>
-                                    <td>".$row['passwrd']."</td>
-                                    <td>
-                                        <button class= button onclick=window.location='modificarAlumno.php?id=".$row['email']."'>Gestionar Practica</button>
-                                    </td>
-                                </tr>";
+
+                            $buscEmpresa = "<button class=button onclick=window.location='modificarAlumno.php?id=".$row['email']."'>Buscar Empresa</button>";
+
+                            $gestEmpresa = "<button class=button onclick=window.location='modificarAlumno.php?id=".$row['email']."'>Gestionar Practica</button>";
+
+                            echo"<tr>
+                                <td>".$row['email']."</td>
+                                <td>".$row['nombre'];
+                                if($row['nombre']==null){echo"<strong>Sin empresa</strong>";}echo"</td>
+                                <td>".$row['fecha_fin']."</td>
+                                <td>".$row['fecha_confirmacion']."</td>
+                                <td>";
+                                        if($row['nombre']==null){print($buscEmpresa);}else{echo"<button class=button0>Buscar Empresa</button>";}
+                                        
+                                        if($row['nombre']!=null){print($gestEmpresa);}else{echo"<button class=button0>Gestionar Empresa</button>";}
+                                        
+                                "</td>
+                            </tr>";
                         }
                                 
                         if($row['email']=null){
-                            echo"No hay datos relacionados.";
-                        }
-
-                        if(isset($_GET['id'])){
-                            $sql = "DELETE FROM alumno WHERE email = '$id'";
-                            print($id);
-                            print($sql);
-                            //$datos [":eliminar"]=$del;
-                            $stmt = $pdo->prepare($sql);
-                            $stmt->execute($datos);
-                            echo"Usuario eliminado con éxito";
-                            echo '<script>window.location.href = "gestorAlumnos.php";</script>';
-                        }
-                                
+                            echo"No hay datos relacionados."; "vee";
+                        }       
                             //}
                     ?>
                 </table>
 
                 <?php
 
-                    echo "<form id=formAlumnos action=gestorAlumnos.php method=post>";
+                    echo "<form id=formAlumnos action=dashboardTutor.php method=post>";
                     if($page!=1){
                         echo"<input type=submit class=button name= ant_pag value='<'>";
                     }

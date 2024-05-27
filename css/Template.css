@@ -168,6 +168,18 @@ input{
     cursor: pointer;
 }
 
+.button0{
+    background-color: rgba(158, 55, 55, 0.447);
+    color: white;
+    padding: 10px 20px;
+    border: #ffffff;
+    border-radius: 15px;
+    margin-left: 3px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 .textbox {
     padding: 10px;
     margin: 5px;
