@@ -59,6 +59,7 @@
                     <p>Email: x@y.com</p>
                     <p>Iniciado como: Tutor</p>
                 </article>
+        
             </article>   
             
             <article id="tabla">
