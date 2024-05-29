@@ -54,10 +54,18 @@
         <section id="cuerpoPrincipal">
             <article id="usuario">
                 <article>
+                    
+                </article>
+                <article id="desplegable">
+                    <button id="usuarioBoton">
+                         <p>Nombre: <?php  echo"$userLog"?></p>
+                    </button>
+                    <div id="desplegableContenido">
                     <h2 class="text">Informacion de usuario</h2>
-                    <p>Nombre: <?php  echo"$userLog"?></p>
-                    <p>Email: x@y.com</p>
-                    <p>Iniciado como: Tutor</p>
+                        <p>Nombre: <?php  echo"$userLog"?></p>
+                        <p>Email: x@y.com</p>
+                        <p>Iniciado como: Tutor</p>
+                    </div>
                 </article>
         
             </article>   
