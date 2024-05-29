@@ -30,11 +30,7 @@
         </form>
     </section>
 
-        /**
-    * @version 1.0
-    * @author rpard & Hhxru
-    * @since 23/05/2024
-    */
+ 
     <?php
 
         $host='localhost';
@@ -67,7 +63,7 @@
                     //echo"Inicio de sesión como tutor";
 
                     //enviar nombre de usuario correspondiente al correo
-                    echo"<script>window.location.href = 'gestorAlumnos.php?user=".$result['user']."';</script>";
+                    echo"<script>window.location.href = 'dashboardTutor.php?user=".$result['user']."';</script>";
                 }
 
                 if(empty($result)){
@@ -92,5 +88,10 @@
             echo $e->getMessage();
         }
     ?>
+
+<footer>
+    <p>2024 Mediagest. Todos los derechos reservados.</p>
+</footer>
+
 </body>
 </html>

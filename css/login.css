@@ -77,3 +77,12 @@ button {
 button:hover {
     background-color: #501010;
 }
+
+footer{
+    display: flex;
+    justify-content: right;
+    height: 50px;
+    background-color: #9e1a1a;
+    color: #ffffff;
+    padding-right: 30px;
+}

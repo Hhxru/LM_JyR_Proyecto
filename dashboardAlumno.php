@@ -154,16 +154,20 @@
             }
         ?>
         
-            </table>
-            <form id="formAlumnos" action="dashboardAlumno.php" method="post">
-                <input type="submit" class="button" name="ant_pag" value="<">
-                <input type="number"  name="pagina" <?php echo "value=".$page;?>>
-                <input type="submit" class="button" name="ir" value="IR">
-                <input type="submit" class="button" name="sig_pag" value=">">
-            </form>
-        </article>
+                </table>
+                <form id="formAlumnos" action="dashboardAlumno.php" method="post">
+                    <input type="submit" class="button" name="ant_pag" value="<">
+                    <input type="number"  name="pagina" <?php echo "value=".$page;?>>
+                    <input type="submit" class="button" name="ir" value="IR">
+                    <input type="submit" class="button" name="sig_pag" value=">">
+                </form>
             </article>
-            
+        </article>
     </section>
+    <footer>
+        <p>2024 Mediagest. Todos los derechos reservados.</p>
+    </footer>
+
+
 </body>
 </html>     
