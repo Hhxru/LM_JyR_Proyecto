@@ -13,7 +13,7 @@ header{
     display: flex;
     flex-direction:row;
     background-color: #9e1a1a;
-    
+    flex-wrap: wrap;
 }
 
     header h1{
@@ -63,6 +63,7 @@ header{
     display: flex;
     justify-content: center;
     width: 100%;
+    flex-wrap: wrap;
 }
 
     #cuerpoPrincipal article{
@@ -116,4 +117,14 @@ form div{
     border-radius: 15px;
     box-sizing: border-box;
     font-size: 16px;
+}
+
+footer{
+    display: flex;
+    justify-content: right;
+    height: 50px;
+    background-color: #9e1a1a;
+    color: #ffffff;
+    padding-right: 30px;
+    margin-top: 60px;
 }

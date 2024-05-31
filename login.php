@@ -30,7 +30,11 @@
         </form>
     </section>
 
+<<<<<<< HEAD
         
+=======
+ 
+>>>>>>> f7bc4048a0f635d7594d80e05b61ef083a81fd72
     <?php
 
         $host='localhost';
@@ -68,7 +72,11 @@
                     $_SESSION['user'] = $result['user'];
 
                     //enviar nombre de usuario correspondiente al correo
+<<<<<<< HEAD
                     echo"<script>window.location.href = 'dashboardTutor.php'; </script>";
+=======
+                    echo"<script>window.location.href = 'dashboardTutor.php?user=".$result['user']."';</script>";
+>>>>>>> f7bc4048a0f635d7594d80e05b61ef083a81fd72
                 }
 
                 if(empty($result)){
@@ -97,5 +105,10 @@
             echo $e->getMessage();
         }
     ?>
+
+<footer>
+    <p>2024 Mediagest. Todos los derechos reservados.</p>
+</footer>
+
 </body>
 </html>
