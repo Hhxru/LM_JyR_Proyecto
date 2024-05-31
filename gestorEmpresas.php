@@ -1,3 +1,11 @@
+<?php 
+    include 'sesion.php';
+    $logout=$_POST['logout'] ?? null;
+    if(isset($logout)){
+        header('Location: login.php');
+        session_destroy();
+    }   
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +21,9 @@
         <ul>
             <li><a href="dashboardTutor.php">Inicio</a></li>
             <li><a href="gestorAlumnos.php">Alumnos</a></li>
-            <li><a href="">Usuario </a></li>
+            <form action="dashboardTutor.php" method="post">
+                <li><input class="button" type="submit" name="logout" value="Cerrar Sesión"></li>
+            </form>
         </ul>
         <div id="logo">
             <img src="img/OIG2-removebg-preview.png" alt="">
@@ -38,7 +48,7 @@
             $localidad = $_POST['localidad'] ?? null;
             $provincia = $_POST['provincia'] ?? null;
             $numPlaza = $_POST['plazas'] ?? null;
-            $telefono = $_POST['tel'] ?? null;
+            $telefono = $_POST['telefono'] ?? null;
             $contacto = $_POST['contacto'] ?? null;
 
 
@@ -60,18 +70,19 @@
         <article id="usuario">
             <article>
                 <h2 class="text">Informacion de usuario</h2>
-                <p>Nombre: <?php  echo"$userLog"?></p>
-                <p>Email: x@y.com</p>
+                <p>Nombre: <?php  print($_SESSION['user'])?></p>
+                <p>Email: <?php print($_SESSION['email'])?></p>
                 <p>Iniciado como: Tutor</p>
             </article>
             <article>
             <form id="formularioAlta" action="gestorEmpresas.php" method="post">
                 <h2 class="text">Alta Empresa</h2>
                     <input type="text" class="textbox" name="nombre" placeholder="Nombre" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
-                    <input type="text" class="textbox" name="cif" placeholder="CIF/NIF" pattern="^[A-W][0-9]{8}$">
-                    <input type="text" class="textbox" name="nombre_fiscal" placeholder="Nombre Fiscal" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
-                    <input type="email" class="textbox" name="email" placeholder="Email" pattern=".+@gmail\.com" required>
-                    <input type="text" class="textbox" name="direccion" placeholder="Dirección" title="Introdice C/ o Avd/ _direccion_, _numero_" pattern="^(C\/|Avd\/)\s.+,\s\d+$" required>
+                    <input type="text" class="textbox" name="cif" placeholder="CIF/NIF" pattern="^[A-W][0-9]{8}$" maxlength="9" required>
+                    <input type="text" class="textbox" name="nombre_fiscal" placeholder="Nombre Fiscal" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ. ]+" title="Ingrese situación fiscal" required>
+                    <input type="email" class="textbox" name="email" placeholder="Email" title="Tipo: @gmail.com" pattern=".+@gmail\.com" required>
+                    <input type="text" class="textbox" name="direccion" placeholder="Dirección" title="Introdice C/ o Avnd/ _direccion_, _numero_" pattern="^(C\/|Avnd\/)\s.+,\s\d+$" required>
+                    <input type="text" class="textbox" name="localidad" placeholder="Localidad" required>
                     <select class="textbox" name="provincia" required>
                         <option value="seleccionar">Seleccione provincia</option>
                         <option value="alava">Álava</option>
@@ -126,16 +137,16 @@
                         <option value="zamora">Zamora</option>
                         <option value="zaragoza">Zaragoza</option>
                     </select>
-                    <input type="number" class="textbox" name="numPlaza" placeholder="Plazas disponibles" pattern="[0-9]*" minlength="1" maxlength="3" required>
-                    <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" pattern="[0-9]*" minlength="9" maxlength="9" required>
-                    <input type="text" class="textbox" name="contacto" placeholder="Contacto" minlength="4" required>
+                    <input type="number" class="textbox" name="plazas" placeholder="Plazas disponibles" pattern="[0-9]*" maxlength="3">
+                    <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" title="Formato junto 9 digitos" pattern="[0-9]*" minlength="9" maxlength="9" required>
+                    <input type="text" class="textbox" name="contacto" placeholder="Contacto">
                     <input type="submit" class="button" name="alta" value="Registrar Empresa">
                     <input type="reset" class="button" value="Borrar datos">
             </form>
 
             <?php
 
-                $sql = "INSERT INTO alumno (nombre, cif, nombre_fiscal, email, direccion, localidad, provincia, num_plazas, telefono, per_contact) FROM empresa VALUES (:nombre, :cif, :nombre_fiscal, :email, :direccion, :localidad, :provincia, :num_plazas, :telefono, :per_contact)";
+                
 
                 $datos=[
                     ":nombre"=>$nombre,
@@ -152,6 +163,8 @@
 
 
                 if(isset($_POST['alta'])){
+                    $sql = "INSERT INTO empresa (nombre, cif, nombre_fiscal, email, direccion, localidad, provincia, numero_plazas, telefono, persona_contacto) VALUES (:nombre, :cif, :nombre_fiscal, :email, :direccion, :localidad, :provincia, :num_plazas, :telefono, :per_contact)";
+
                     $stmt = $pdo->prepare($sql);
                     $row = $stmt->execute($datos);
                     echo"Empresa registrada con éxito";
@@ -188,8 +201,8 @@
                 $totalFilas = "SELECT count(*) as filas_totales FROM empresa WHERE true";
 
                 if(!empty($buscar)){
-                    $totalFilas .= " and nombre = :buscar";
-                    $datos [":buscar"]=$buscar;
+                    $totalFilas .= " and nombre like :buscar";
+                    $datos [":buscar"]='%'.$buscar.'%';
                 }
 
                 $stmt = $pdo->prepare($totalFilas);
@@ -236,8 +249,8 @@
                 $sql = "SELECT * FROM empresa Where true";
 
                 if(!empty($buscar)){
-                    $sql .= " and nombre = :buscar";
-                    $datos [":buscar"]=$buscar;
+                    $sql .= " and nombre like :buscar";
+                    $datos [":buscar"]='%'.$buscar.'%';
                 }
                 
                 $sql .= " limit 10 offset $mostrar_pag";
@@ -258,7 +271,10 @@
                                     <td>".$row['telefono']."</td>
                                     <td>".$row['numero_plazas']."</td>
                                     <td>
-                                        <button class= button onclick=window.location='modificarEmpresa.php?id=".$row['nombre']."'>Editar</button>
+                                        <form action='modificarEmpresas.php' method='post'>
+                                            <input type='hidden' name='id' value=".$row['nombre'].">
+                                            <input type='submit' class='button' value='Editar'>
+                                        </form>
                                         <button class= button onclick=window.location='gestorEmpresas.php?id=".$row['nombre']."'>Eliminar</button>
                                     </td>
                                 </tr>";

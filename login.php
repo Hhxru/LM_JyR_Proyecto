@@ -30,11 +30,7 @@
         </form>
     </section>
 
-        /**
-    * @version 1.0
-    * @author rpard & Hhxru
-    * @since 23/05/2024
-    */
+        
     <?php
 
         $host='localhost';
@@ -42,6 +38,7 @@
         $user='root';
         $pass='';
 
+        
         $email = $_POST['email'] ?? null;
         $password = $_POST['password'] ?? null;
         $sesion = $_POST['sesion'] ?? null;
@@ -65,9 +62,13 @@
                 if(!empty($result)){
                     //si encuentra datos relacionados inicia sesión
                     //echo"Inicio de sesión como tutor";
+                    //establecer sesion
+                    session_start();
+                    $_SESSION['email'] = $email;
+                    $_SESSION['user'] = $result['user'];
 
                     //enviar nombre de usuario correspondiente al correo
-                    echo"<script>window.location.href = 'gestorAlumnos.php?user=".$result['user']."';</script>";
+                    echo"<script>window.location.href = 'dashboardTutor.php'; </script>";
                 }
 
                 if(empty($result)){
@@ -80,7 +81,11 @@
                 if(!empty($result)){
                     //si encuentra datos relacionados inicia sesión
                     //echo"Inicio de sesión como alumno";
-                    
+                    //establecer sesion
+                    session_start();
+                    $_SESSION['email'] = $email;
+                    $_SESSION['user'] = $result['user'];
+
                     //enviar nombre de usuario correspondiente al correo
                     echo"<script>window.location.href = 'dashboardAlumno.php?user=".$result['user']."';</script>";
                 }else{

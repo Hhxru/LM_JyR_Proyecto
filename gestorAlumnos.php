@@ -1,3 +1,11 @@
+<?php 
+    include 'sesion.php';
+    $logout=$_POST['logout'] ?? null;
+    if(isset($logout)){
+        header('Location: login.php');
+        session_destroy();
+    }   
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +20,9 @@
         <ul>
             <li><a href="dashboardTutor.php">Inicio</a></li>
             <li><a href="gestorEmpresas.php">Empresas</a></li>
-            <li><a href="">Usuario </a></li>
+            <form action="dashboardTutor.php" method="post">
+                <li><input class="button" type="submit" name="logout" value="Cerrar Sesión"></li>
+            </form>
         </ul>
         <div id="logo">
             <img src="img/OIG2-removebg-preview.png" alt="">
@@ -55,8 +65,8 @@
             <article id="usuario">
                 <article>
                     <h2 class="text">Informacion de usuario</h2>
-                    <p>Nombre: <?php  echo"$userLog"?></p>
-                    <p>Email: x@y.com</p>
+                    <p>Nombre: <?php  print($_SESSION['user'])?></p>
+                    <p>Email: <?php print($_SESSION['email'])?></p>
                     <p>Iniciado como: Tutor</p>
                 </article>
 
@@ -191,7 +201,11 @@
                                     <td>".$row['cv_file']."</td>
                                     <td>".$row['passwrd']."</td>
                                     <td>
-                                        <button class= button onclick=window.location='modificarAlumno.php?id=".$row['email']."'>Editar</button>
+                                        <form action='modificarAlumno.php' method='post'>
+                                            <input type='hidden' name='id' value=".$row['email'].">
+                                            <input type='submit' class='button' value='Editar'>
+                                        </form>
+                                            
                                         <button class= button onclick=window.location='gestorAlumnos.php?id=".$row['email']."'>Eliminar</button>
                                     </td>
                                 </tr>";
@@ -203,8 +217,6 @@
 
                         if(isset($_GET['id'])){
                             $sql = "DELETE FROM alumno WHERE email = '$id'";
-                            print($id);
-                            print($sql);
                             //$datos [":eliminar"]=$del;
                             $stmt = $pdo->prepare($sql);
                             $stmt->execute($datos);

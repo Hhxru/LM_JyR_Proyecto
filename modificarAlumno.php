@@ -10,8 +10,9 @@
     <header>
         <h1>MediaGestCT</h1>
         <ul>
-            <li><a href="dashboardTutor.php">Alumnos</a></li>
-            <li><a href="">Usuario </a></li>
+            <li><a href="dashboardTutor.php">Inicio</a></li>
+            <li><a href="gestorAlumnos.php">Alumnos</a></li>
+            <li><a href="gestorEmpresas.php">Empresas</a></li>
         </ul>
         <div id="logo">
             <img src="img/OIG2-removebg-preview.png" alt="">
@@ -22,7 +23,7 @@
         <article>
         <?php
 
-            $id = $_GET['id'] ?? null;
+            $id = $_POST['id'] ?? null;
             $email = $_POST['email'] ?? null;
             $nia = $_POST['nia'] ?? null;
             $tel = $_POST['telefono'] ?? null;
@@ -46,7 +47,7 @@
                 $datos=[];
 
                 //numero id (fila) a mostrar
-                $mostrarFila = "SELECT * FROM alumno WHERE email=\"$id\"";
+                $mostrarFila = "SELECT * FROM alumno WHERE email='$id'";
                 $stmt = $pdo->prepare($mostrarFila);
                 $stmt->execute($datos);
                 $usuario=$stmt->fetch();
@@ -56,37 +57,38 @@
             <h2>Modificar Alumno</h2>
 
             <form action="modificarAlumno.php" method="post">
-            <input type="email" class="textbox" name="email" value="<?php print($usuario['email'])?>" readonly>
-            <input type="text" class="textbox" name="nia" placeholder="NIA" value="<?php print($usuario['nia'])?>" pattern="[0-9]*" minlength="8" maxlength="8" required>
-            <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>
-            <input type="text" class="textbox" name="nombre" placeholder="Nombre" value="<?php print($usuario['nombre'])?>" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
-            <input type="password" class="textbox" name="contrasena" placeholder="Contraseña" value="<?php print($usuario['passwrd'])?>" minlength="4" required>
-            <input type="submit" class="button" name="modificar" value="Modificar">
+                <input type="email" class="textbox" name="email" value="<?php print($usuario['email'])?>" readonly>
+                <input type="text" class="textbox" name="nia" placeholder="NIA" value="<?php print($usuario['nia'])?>" pattern="[0-9]*" minlength="8" maxlength="8" required>
+                <input type="text" class="textbox" name="telefono" placeholder="Nº Telefono" value="<?php print($usuario['telefono'])?>" pattern="[0-9]*" minlength="9" maxlength="9" required>
+                <input type="text" class="textbox" name="nombre" placeholder="Nombre" value="<?php print($usuario['nombre'])?>" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Ingrese solo letras" required>
+                <input type="password" class="textbox" name="contrasena" placeholder="Contraseña" value="<?php print($usuario['passwrd'])?>" minlength="4" required>
+                <div>
+                    <input type="hidden" name="id" value="<?php $usuario['email']?>">
+                    <input type="submit" class="button" name="modificar" value="Modificar">
+                    <a href="gestorAlumnos.php" class="button">Volver</a>
+                </div>
             </form>
 
-           <a href="gestorAlumnos.php"> <input type="submit" class="button" value="Volver"></a>
+           
 
 
             <?php
 
             $datos = [
-                /*
+                
                 ":email" => $email,
                 ":nia" => $nia,
                 ":telefono" => $tel,
                 ":nombre" => $nombre,
                 ":contrasena" => $password
-                */
+                
             ];
 
             if(isset($_POST['modificar'])){
-                $sql = "UPDATE alumno SET nia = '$nia', telefono = '$tel', nombre = '$nombre', passwrd = '$password' WHERE email = '$email'";
+                $sql = "UPDATE alumno SET nia = :nia, telefono = :telefono, nombre = :nombre, passwrd = :contrasena WHERE email = :email";
                 $stmt = $pdo->prepare($sql);
                 $usuario = $stmt->execute($datos);
                 echo "Usuario modificado con éxito";
-            }else{
-                echo "Upps!!! Algo salió mal";
-                echo "Revise los campos y vuelva a intentarlo";
             }
 
 
